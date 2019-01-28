@@ -1,0 +1,22 @@
+package ${packagePath}.entity;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
+import java.util.Date;
+
+##@JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
+public class ${className} extends BaseEntity{
+#foreach(${column} in ${columns})
+#if( $!column.remarks!= "")
+    // $column.remarks
+#end
+    private ${column.typeName} ${column.columnName};
+#end
+
+    @Override
+    public void preInsert() {}
+
+    @Override
+    public void preUpdate() {}
+}

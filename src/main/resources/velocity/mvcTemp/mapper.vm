@@ -1,0 +1,36 @@
+package ${packagePath}.dao;
+## 类名首字母大写
+#set($upperClassName = $className.substring(0,1).toUpperCase()+ $className.substring(1))
+## 类名首字母小写
+#set($lowerClassName = $className.substring(0,1).toLowerCase()+ $className.substring(1))
+import ${packagePath}.entity.${upperClassName};
+import java.util.List;
+
+import ${packagePath}.entity.example.${upperClassName}Example;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ${upperClassName}Mapper {
+    long countByExample(${upperClassName}Example example);
+
+    int deleteByExample(${upperClassName}Example example);
+
+    int deleteByPrimaryKey(Long id);
+
+    int insert(${upperClassName} record);
+
+    int insertSelective(${upperClassName} record);
+
+    List<${upperClassName}> selectByExample(${upperClassName}Example example);
+
+    ${upperClassName} selectByPrimaryKey(Long id);
+
+    int updateByExampleSelective(@Param("record") ${upperClassName} record, @Param("example") ${upperClassName}Example example);
+
+    int updateByExample(@Param("record") ${upperClassName} record, @Param("example") ${upperClassName}Example example);
+
+    int updateByPrimaryKeySelective(${upperClassName} record);
+
+    int updateByPrimaryKey(${upperClassName} record);
+    }

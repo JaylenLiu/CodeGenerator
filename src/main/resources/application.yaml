@@ -54,3 +54,6 @@ pagehelper:
 logging:
   config: classpath:logback-spring.xml
   path: D:/codegeneratorlog/
+
+#codegenerator properties
+packagePath: cn.jaylen.codegenerator

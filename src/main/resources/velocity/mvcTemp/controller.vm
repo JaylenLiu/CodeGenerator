@@ -1,0 +1,57 @@
+package ${packagePath}.controller;
+## 类名首字母大写
+#set($upperClassName = $className.substring(0,1).toUpperCase()+ $className.substring(1))
+## 类名首字母小写
+#set($lowerClassName = $className.substring(0,1).toLowerCase()+ $className.substring(1))
+import ${packagePath}.entity.${upperClassName};
+import ${packagePath}.service.impl.${upperClassName}ServiceImpl;
+import ${packagePath}.util.Message;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+public class ${upperClassName}Controller{
+    @Autowired
+    ${upperClassName}ServiceImpl service;
+
+    @ApiOperation(value = "根据id查询", notes = "根据id查询")
+    @GetMapping(value = "/${lowerClassName}")
+    public Message selectById(Long id){
+        return Message.successMessage(service.selectByPrimaryKey(id));
+    }
+
+    @ApiOperation(value = "获取所有数据", notes = "获取所有数据")
+    @GetMapping("/${lowerClassName}s")
+    public Message selectAll(){
+        return Message.successMessage(service.selectAll());
+    }
+
+    @ApiOperation(value = "新增${upperClassName}", notes = "新增${upperClassName}")
+    @PostMapping("/${lowerClassName}")
+    public Message insert${upperClassName}(${upperClassName} ${lowerClassName}){
+        return Message.successMessage(service.insert(${lowerClassName}));
+    }
+
+    @ApiOperation(value = "删除${upperClassName}", notes = "删除${upperClassName}")
+    @DeleteMapping("/${lowerClassName}")
+    public Message delete${upperClassName}(Long id){
+        return Message.successMessage(service.deleteByPrimaryKey(id));
+    }
+
+    @ApiOperation(value = "删除多个", notes = "删除多个")
+    @DeleteMapping("/${lowerClassName}s")
+    public Message deleteByIds(Long[] ids){
+        if (ids == null || ids.length == 0) {
+            return Message.nullParamsMessage();
+        } else {
+            return Message.successMessage(service.deleteByIDs(ids));
+        }
+    }
+
+    @ApiOperation(value = "更新${upperClassName}", notes = "更新${upperClassName}")
+    @PutMapping(value = "/${lowerClassName}")
+    public Message update${upperClassName}(${upperClassName} ${lowerClassName}){
+        return Message.successMessage(service.updateByPrimaryKey(${lowerClassName}));
+    }
+}

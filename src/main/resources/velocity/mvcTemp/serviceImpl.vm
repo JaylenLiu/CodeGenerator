@@ -1,0 +1,35 @@
+package ${packagePath}.service.impl;
+## 类名首字母大写
+#set($upperClassName = $className.substring(0,1).toUpperCase()+ $className.substring(1))
+## 类名首字母小写
+#set($lowerClassName = $className.substring(0,1).toLowerCase()+ $className.substring(1))
+import ${packagePath}.base.BaseServiceImpl;
+import ${packagePath}.dao.${upperClassName}Mapper;
+import ${packagePath}.entity.${upperClassName};
+import ${packagePath}.entity.example.${upperClassName}Example;
+import ${packagePath}.service.${upperClassName}Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
+
+@Service
+public class ${upperClassName}ServiceImpl extends BaseServiceImpl<${upperClassName}> implements ${upperClassName}Service {
+    @Autowired
+    ${upperClassName}Mapper ${lowerClassName}Mapper;
+
+    @Override
+    public List<${upperClassName}> selectAll(){
+        ${upperClassName}Example example = new ${upperClassName}Example();
+        example.createCriteria().andIdIsNotNull();
+        return ${lowerClassName}Mapper.selectByExample(example);
+    }
+
+    @Override
+    public int deleteByIDs(Long[] ids){
+        ${upperClassName}Example example = new ${upperClassName}Example();
+        example.createCriteria().andIdIn(Arrays.asList(ids));
+        return ${lowerClassName}Mapper.deleteByExample(example);
+    }
+}
