@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * @author ljl
  * @create 2018-06-28 15:24
- * @desc 拦截请求，获取分页信息以及request、response对象，并将其存入Messge线程变量中
+ * @desc 拦截请求，获取分页信息以及request、response对象，并将其存入线程变量中
  **/
 @Component
 @WebFilter(urlPatterns = "/*", filterName = "pageFilter")

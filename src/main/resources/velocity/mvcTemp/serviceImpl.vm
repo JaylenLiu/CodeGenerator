@@ -6,9 +6,9 @@ package ${packagePath}.service.impl;
 import ${packagePath}.base.BaseServiceImpl;
 import ${packagePath}.dao.${upperClassName}Mapper;
 import ${packagePath}.entity.${upperClassName};
-import ${packagePath}.entity.example.${upperClassName}Example;
+import ${packagePath}.entity.${upperClassName}Example;
 import ${packagePath}.service.${upperClassName}Service;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Service
 public class ${upperClassName}ServiceImpl extends BaseServiceImpl<${upperClassName}> implements ${upperClassName}Service {
-    @Autowired
+    @Resource
     ${upperClassName}Mapper ${lowerClassName}Mapper;
 
     @Override

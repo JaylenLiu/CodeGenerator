@@ -43,7 +43,7 @@ server:
 
 mybatis:
   config-location: classpath:mybatis.xml
-
+  mapper-locations: classpath:*Mapper.xml
 #pagehelper
 pagehelper:
   helperDialect: mysql

@@ -1,5 +1,6 @@
 package ${packagePath}.entity;
 
+import ${packagePath}.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import java.util.Date;

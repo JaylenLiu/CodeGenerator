@@ -5,7 +5,7 @@ package ${packagePath}.controller;
 #set($lowerClassName = $className.substring(0,1).toLowerCase()+ $className.substring(1))
 import ${packagePath}.entity.${upperClassName};
 import ${packagePath}.service.impl.${upperClassName}ServiceImpl;
-import ${packagePath}.util.Message;
+import ${packagePath}.common.Message;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
