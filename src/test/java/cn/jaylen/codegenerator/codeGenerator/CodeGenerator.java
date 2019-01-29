@@ -45,27 +45,30 @@ public class CodeGenerator {
     }
 
     private String changeType(String colType) {
+        System.out.println(colType);
         switch (colType) {
-            case "char":
-            case "varchar" :{
+            case "CHAR":
+            case "VARCHAR" :{
                 return "String";
             }
-            case "bigint":{
+            case "BIGINT UNSIGNED":
+            case "BIGINT":{
                 return "long";
             }
-            case "int" :{
+            case "BIT" :
+            case "INT" :{
                 return "int";
             }
-            case "datetime" :
-            case "date" : {
+            case "DATETIME" :
+            case "DATE" : {
                 return "Date";
             }
-            case "decimal" :
-            case "numeric":{
+            case "DECIMAL" :
+            case "NUMBERIC":{
                 return "BigDecimal";
             }
-            case "float":
-            case "double":{
+            case "FLOAT":
+            case "DOUBLE":{
                 return "double";
             }
             default:{
