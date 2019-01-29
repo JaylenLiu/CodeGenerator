@@ -29,11 +29,20 @@ public class CodeGenerator {
         return jdbcMap;
     }
 
+    /**
+     * 配置需要生成代码的表名
+     * @return
+     */
     private String[] getTables(){
         String[] tables = new String[]{"agile_component", "agile_entity", "agile_schema"};
         return tables;
     }
 
+    /**
+     * 获取数据库表的列信息
+     * @param tableName
+     * @return
+     */
     private List<Map<String,Object>> getColumn(String tableName){
         DatabaseUtil databaseUtil = new DatabaseUtil("127.0.0.1", "3306", "root", "123456");
         List<Map<String,Object>> result = databaseUtil.getTableColumns("codegenerator", tableName);
@@ -44,8 +53,12 @@ public class CodeGenerator {
         return result;
     }
 
+    /**
+     * 数据库列类型转换
+     * @param colType
+     * @return
+     */
     private String changeType(String colType) {
-        System.out.println(colType);
         switch (colType) {
             case "CHAR":
             case "VARCHAR" :{
@@ -94,7 +107,6 @@ public class CodeGenerator {
                 generatorUtil.generateController(className);
                 generatorUtil.generateEntity(getColumn(tables[i]), className, packagePath);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

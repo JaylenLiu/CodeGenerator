@@ -1,13 +1,13 @@
 package cn.jaylen.codegenerator.common;
 
+import lombok.Data;
+
 /**
  * @author ljl
  * @create 2018-06-26 16:09
  * @desc 数据返回对象,
- * 200: 成功
- * 500：错误
- * 600：系统未登录
  **/
+@Data
 public class Message<T> {
     private final static String SUCCESS = "success";
     private final static String ERROR = "error";
@@ -43,47 +43,5 @@ public class Message<T> {
 
     public static Message nullParamsMessage(){
         return  new Message("参数为空！",500, null);
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public int gethttpCode() {
-        return httpCode;
-    }
-
-    public void sethttpCode(int httpCode) {
-        this.httpCode = httpCode;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public int getPages() {
-        return pages;
-    }
-
-    public void setPages(int pages) {
-        this.pages = pages;
-    }
-
-    @Override
-    public String toString() {
-        return "Message{" +
-                "message='" + message + '\'' +
-                ", httpCode=" + httpCode +
-                ", data=" + data +
-                ", pages=" + pages +
-                '}';
     }
 }
