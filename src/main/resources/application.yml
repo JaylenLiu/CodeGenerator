@@ -39,7 +39,13 @@ spring:
 server:
   servlet:
     context-path: /codegenerator
-  port: 8080
+  port: 443
+  ssl:
+    key-store: classpath:server.keystore
+    key-alias: tomcat
+    enabled: true
+    key-store-password: 616620
+    key-store-type: JKS
 
 mybatis:
   config-location: classpath:mybatis.xml
