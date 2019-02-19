@@ -1,5 +1,6 @@
 package cn.jaylen.codegenerator.util;
 
+import cn.jaylen.codegenerator.entity.DatabaseConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +28,22 @@ public class DatabaseUtil {
             dbMetaData = con.getMetaData();
         } catch (Exception e) {
             logger.error("数据库连接获取失败", e.getMessage());
+        }
+    }
+
+    /**
+     * 根据传入的对象构建元数据
+     * @param databaseConnection
+     */
+    public DatabaseUtil(DatabaseConnection databaseConnection){
+        try {
+            if (databaseConnection.getConnType() == 1) {
+                String url = "jdbc:mysql://" + databaseConnection.getConnIp() + ":" + databaseConnection.getConnPort();
+                con = DriverManager.getConnection(url, databaseConnection.getConnUsername(), databaseConnection.getConnPwd());
+                dbMetaData = con.getMetaData();
+            }
+        } catch (Exception e) {
+            logger.error("数据库连接获取失败",databaseConnection, e.getMessage());
         }
     }
 

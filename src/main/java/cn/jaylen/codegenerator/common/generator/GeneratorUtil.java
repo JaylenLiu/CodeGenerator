@@ -1,6 +1,7 @@
 package cn.jaylen.codegenerator.common.generator;
 
 import ch.qos.logback.classic.Logger;
+import cn.jaylen.codegenerator.entity.AgileComponent;
 import cn.jaylen.codegenerator.util.StringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -36,6 +37,8 @@ public class GeneratorUtil {
     private static GeneratorUtil generatorUtil = null;
     private String packagePath;
     private String javaPath;
+    private String moduleName;
+    private String webPath;
 
     private GeneratorUtil(String packagePath){
         logger.info("模板引擎初始化……");
@@ -52,11 +55,55 @@ public class GeneratorUtil {
 
     }
 
+    private GeneratorUtil(String packagePath, String moduleName){
+        logger.info("模板引擎初始化……");
+        // 初始化模板引擎
+        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        ve.setProperty("input.encoding","UTF-8");
+        ve.setProperty("output.encoding","UTF-8");
+        ve.init();
+        this.packagePath = packagePath;
+        this.moduleName = moduleName;
+        this.javaPath = this.getClass().getClassLoader().getResource("").getPath() +
+                "src/temp/java/" + moduleName + "/" + packagePath.replace('.', '/');
+//        this.webPath = this.getClass().getClassLoader().getResource("").getPath() +
+//                "src/temp/web/" + moduleName;
+        this.webPath = "D:\\test\\" + moduleName;
+    }
+
     public static GeneratorUtil getGeneratorUtil(String packagePath){
         if (generatorUtil == null) {
             generatorUtil = new GeneratorUtil(packagePath);
         }
         return generatorUtil;
+    }
+
+    public static GeneratorUtil getGeneratorUtil(String packagePath, String moduleName){
+        if (generatorUtil == null) {
+            generatorUtil = new GeneratorUtil(packagePath, moduleName);
+        }
+        return generatorUtil;
+    }
+
+    /**
+     * 生成mybatis-generator配置文件
+     */
+    public boolean generateConfig(List<String> tableNames, Map jdbc){
+        logger.info("生成mybatis-generator配置文件……");
+        // 加载模板
+        Template entityTpt = ve.getTemplate("velocity/generatorConfig.vm");
+
+        // 设置模板填充内容
+        VelocityContext ctx = new VelocityContext();
+        Map<String, String> map = new HashMap<>();
+        ctx.put("jdbc", jdbc);
+        ctx.put("packagePath", packagePath);
+        ctx.put("tableNames", tableNames);
+
+        // 获取文件存放地址
+        String rootPath = GeneratorUtil.class.getClassLoader().getResource("generatorConfig.xml").getPath();
+        return merge(entityTpt,ctx,  rootPath);
     }
 
     /**
@@ -171,6 +218,21 @@ public class GeneratorUtil {
         File dir = new File(rootPath);
         dir.mkdirs();
         return merge(entityTpt,ctx,  rootPath + "/SpringContextUtil.java");
+    }
+
+    public boolean generateIndex(String entityName, List<AgileComponent> componentList) {
+        logger.info("生成前端index页面……");
+        // 加载模板
+        Template entityTpt = ve.getTemplate("templates/vueTemp/index.vm");
+        // 设置模板填充内容
+        VelocityContext ctx = new VelocityContext();
+        ctx.put("moduleName", moduleName);
+        ctx.put("entityName", entityName);
+        ctx.put("componentList", componentList);
+        String rootPath = this.webPath;
+        File dir = new File(rootPath);
+        dir.mkdirs();
+        return merge(entityTpt,ctx,  rootPath + "/"+ moduleName +".vue");
     }
 
     /**
