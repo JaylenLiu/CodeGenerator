@@ -1,6 +1,5 @@
 package cn.jaylen.codegenerator.service.impl;
 
-import ch.qos.logback.classic.Logger;
 import cn.jaylen.codegenerator.common.Message;
 import cn.jaylen.codegenerator.dao.*;
 import cn.jaylen.codegenerator.entity.SysAccount;
@@ -16,6 +15,7 @@ import cn.jaylen.codegenerator.util.PageUtil;
 import cn.jaylen.codegenerator.util.SpringContextUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +50,7 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private SysRoleMapper sysRoleMapper;
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(AccountServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
 
     /**
      * 登录

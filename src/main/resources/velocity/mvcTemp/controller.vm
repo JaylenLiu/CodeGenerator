@@ -17,7 +17,7 @@ public class ${upperClassName}Controller{
 
     @ApiOperation(value = "根据id查询", notes = "根据id查询")
     @GetMapping(value = "/${lowerClassName}")
-    public Message selectById(Long id){
+    public Message selectById(Integer id){
         return Message.successMessage(service.selectByPrimaryKey(id));
     }
 
@@ -42,13 +42,13 @@ public class ${upperClassName}Controller{
 
     @ApiOperation(value = "删除${upperClassName}", notes = "删除${upperClassName}")
     @DeleteMapping("/${lowerClassName}")
-    public Message delete${upperClassName}(Long id){
+    public Message delete${upperClassName}(Integer id){
         return Message.successMessage(service.deleteByPrimaryKey(id));
     }
 
     @ApiOperation(value = "删除多个", notes = "删除多个")
     @DeleteMapping("/${lowerClassName}s")
-    public Message deleteByIds(Long[] ids){
+    public Message deleteByIds(Integer[] ids){
         if (ids == null || ids.length == 0) {
             return Message.nullParamsMessage();
         } else {

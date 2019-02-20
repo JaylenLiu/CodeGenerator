@@ -182,7 +182,9 @@ public class DatabaseUtil {
         switch (columnType) {
             case "TEXT" :
             case "VARCHAR" : return "String";
+            case "BIGINT": return "Long";
             case "TINYINT":
+            case "BIT":
             case "INT": return  "Integer";
             case "FLOAT" : return "Float";
             case "DECIMAL" :return "BigDecimal";

@@ -27,10 +27,10 @@ public class BaseServiceImpl<T> implements BaseService<T>{
     }
 
     @Override
-    public int deleteByPrimaryKey(Long logId) {
+    public int deleteByPrimaryKey(Long id) {
         try {
             Method method = getMapperObj().getClass().getMethod("deleteByPrimaryKey", Long.class);
-            return (int)method.invoke(mapperObj, logId);
+            return (int)method.invoke(mapperObj, id);
         } catch (Exception e) {
             logger.error("删除"+entityClass.getSimpleName()+"失败", e);
             return -1;
@@ -59,10 +59,10 @@ public class BaseServiceImpl<T> implements BaseService<T>{
     }
 
     @Override
-    public T selectByPrimaryKey(Long logId) {
+    public T selectByPrimaryKey(Long id) {
         try {
             Method method = getMapperObj().getClass().getMethod("selectByPrimaryKey", Long.class);
-            return (T) method.invoke(mapperObj, logId);
+            return (T) method.invoke(mapperObj, id);
         } catch (Exception e) {
             logger.error("获取"+entityClass.getSimpleName()+"失败", e);
             return null;

@@ -6,11 +6,17 @@ package ${packagePath}.service.impl;
 import ${packagePath}.base.BaseServiceImpl;
 import ${packagePath}.dao.${upperClassName}Mapper;
 import ${packagePath}.entity.${upperClassName};
+import ${packagePath}.common.Message;
 import ${packagePath}.entity.${upperClassName}Example;
 import ${packagePath}.service.${upperClassName}Service;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import ${packagePath}.util.PageUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,6 +24,8 @@ import java.util.List;
 public class ${upperClassName}ServiceImpl extends BaseServiceImpl<${upperClassName}> implements ${upperClassName}Service {
     @Resource
     ${upperClassName}Mapper ${lowerClassName}Mapper;
+
+    private Logger logger = LoggerFactory.getLogger(${upperClassName}ServiceImpl.class);
 
     @Override
     public List<${upperClassName}> selectAll(){
@@ -44,7 +52,7 @@ public class ${upperClassName}ServiceImpl extends BaseServiceImpl<${upperClassNa
     }
 
     @Override
-    public int deleteByIDs(Long[] ids){
+    public int deleteByIDs(Integer[] ids){
         ${upperClassName}Example example = new ${upperClassName}Example();
         example.createCriteria().andIdIn(Arrays.asList(ids));
         return ${lowerClassName}Mapper.deleteByExample(example);
