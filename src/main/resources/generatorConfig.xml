@@ -59,7 +59,7 @@
           targetProject：目标项目，指定一个存在的目录下，生成的内容会放到指定目录中，如果目录不存在，MBG不会自动建目录
        -->
         <javaModelGenerator targetPackage="cn.jaylen.codegenerator.entity"
-                            targetProject=".\src\main\java">
+                            targetProject="d:/code">
             <!--  for MyBatis3/MyBatis3Simple
              自动为每一个生成的类创建一个构造方法，构造方法包含了所有的field；而不是使用setter；
             -->
@@ -87,7 +87,7 @@
 
         <!-- targetProject:映射文件生成的位置,即xml的位置 -->
         <sqlMapGenerator targetPackage="cn.jaylen.codegenerator.dao.xml"
-                         targetProject=".\src\main\java">
+                         targetProject="d:/code">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false" />
         </sqlMapGenerator>
@@ -101,7 +101,7 @@
        -->
         <javaClientGenerator type="XMLMAPPER"
                              targetPackage="cn.jaylen.codegenerator.dao"
-                             targetProject=".\src\main\java">
+                             targetProject="d:/code">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>

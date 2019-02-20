@@ -27,9 +27,16 @@ public class ${upperClassName}Controller{
         return Message.successMessage(service.selectAll());
     }
 
+    @ApiOperation(value = "分页获取数据", notes = "分页获取数据")
+    @GetMapping("/${lowerClassName}sPages")
+    public Message selectByPages(){
+        return service.selectByPages();
+    }
+
     @ApiOperation(value = "新增${upperClassName}", notes = "新增${upperClassName}")
     @PostMapping("/${lowerClassName}")
     public Message insert${upperClassName}(${upperClassName} ${lowerClassName}){
+        ${lowerClassName}.preInsert();
         return Message.successMessage(service.insert(${lowerClassName}));
     }
 
@@ -52,6 +59,7 @@ public class ${upperClassName}Controller{
     @ApiOperation(value = "更新${upperClassName}", notes = "更新${upperClassName}")
     @PutMapping(value = "/${lowerClassName}")
     public Message update${upperClassName}(${upperClassName} ${lowerClassName}){
+        ${lowerClassName}.preUpdate();
         return Message.successMessage(service.updateByPrimaryKey(${lowerClassName}));
     }
 }

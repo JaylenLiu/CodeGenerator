@@ -54,6 +54,10 @@ public class AgileEntityServiceImpl extends BaseServiceImpl<AgileEntity> impleme
             agileEntity.setEntityType(1);
             agileEntity.preInsert();
             agileEntityMapper.insertSelective(agileEntity);
+
+//            DatabaseConnection connection = connectionMapper.selectByPrimaryKey(conId);
+//            DatabaseUtil util = new DatabaseUtil(connection);
+//            util.
             saveComponent(conId, databaseName, tableName, agileEntity.getId());
         }
         return tableNames.length;
@@ -70,6 +74,7 @@ public class AgileEntityServiceImpl extends BaseServiceImpl<AgileEntity> impleme
         DatabaseConnection connection = connectionMapper.selectByPrimaryKey(conId);
         DatabaseUtil util = new DatabaseUtil(connection);
         List<Map<String, Object>> columns = util.getTableColumns(databaseName,tableName);
+        List<Map<String, Object>> primaryKeys = util.getPrimaryKeys(databaseName,tableName);
         if (columns.size() != 0) {
             columns.forEach(column-> {
                 String columnName = StringUtils.lineToHump(column.get("columnName").toString());
@@ -80,6 +85,25 @@ public class AgileEntityServiceImpl extends BaseServiceImpl<AgileEntity> impleme
                 component.setLabel(remarks);
                 component.setPlaceholder(remarks);
                 component.preInsert();
+
+                primaryKeys.forEach(map -> {
+                    if (map.get("column_name").toString().equalsIgnoreCase(columnName)){
+                        component.setIsVisibled(false);
+                    }
+                });
+
+                String typeName = column.get("typeName").toString().toLowerCase();
+                switch (typeName) {
+                    case "date" : {
+                        component.setComponentType("datePicker");
+                        break;
+                    }
+                    case "datetime":{
+                        component.setComponentType("dateTimePicker");
+                        break;
+                    }
+                    default:{}
+                }
                 componentMapper.insertSelective(component);
             });
         }

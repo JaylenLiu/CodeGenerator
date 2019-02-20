@@ -111,12 +111,35 @@ public class DatabaseUtil {
                 map.put("remarks", rs.getString("REMARKS"));
                 list.add(map);
             }
+            getPrimaryKeys(schemaName, tableName);
         } catch (SQLException e){
             e.printStackTrace();
         }
         return list;
     }
 
+    /**
+     * 获取主键信息
+     * @param schemaName
+     * @param tableName
+     * @return
+     */
+    public LinkedList<Map<String, Object>> getPrimaryKeys(String schemaName, String tableName){
+        LinkedList<Map<String, Object>> list = new LinkedList<>();
+        try {
+            ResultSet rs = dbMetaData.getPrimaryKeys(schemaName,schemaName, tableName);
+            while (rs.next()){
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("pk_name", rs.getString("pk_name"));
+                map.put("column_name", rs.getString("column_name"));
+                map.put("key_seq", rs.getString("key_seq"));
+                list.add(map);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     /**
      * 获得一个表的索引信息
      */

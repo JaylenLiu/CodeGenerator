@@ -2,6 +2,7 @@ package cn.jaylen.codegenerator.common.generator;
 
 import ch.qos.logback.classic.Logger;
 import cn.jaylen.codegenerator.entity.AgileComponent;
+import cn.jaylen.codegenerator.util.DatabaseUtil;
 import cn.jaylen.codegenerator.util.StringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -51,8 +52,7 @@ public class GeneratorUtil {
         this.packagePath = packagePath;
 //        this.javaPath = this.getClass().getClassLoader().getResource("").getPath() +
 //                "src/main/java/" + packagePath.replace('.', '/');
-        this.javaPath = "d:/code/src/main/java/" + packagePath.replace('.', '/');
-
+        this.javaPath = "d:/code/" + packagePath.replace('.', '/');
     }
 
     private GeneratorUtil(String packagePath, String moduleName){
@@ -65,11 +65,12 @@ public class GeneratorUtil {
         ve.init();
         this.packagePath = packagePath;
         this.moduleName = moduleName;
-        this.javaPath = this.getClass().getClassLoader().getResource("").getPath() +
-                "src/temp/java/" + moduleName + "/" + packagePath.replace('.', '/');
+        this.javaPath = "d:/code/" + packagePath.replace('.', '/');
+//        this.javaPath = this.getClass().getClassLoader().getResource("").getPath() +
+//                "src/temp/java/" + moduleName + "/" + packagePath.replace('.', '/');
 //        this.webPath = this.getClass().getClassLoader().getResource("").getPath() +
 //                "src/temp/web/" + moduleName;
-        this.webPath = "D:\\test\\" + moduleName;
+        this.webPath = "D:\\code\\";
     }
 
     public static GeneratorUtil getGeneratorUtil(String packagePath){
@@ -203,27 +204,10 @@ public class GeneratorUtil {
         return merge(entityTpt,ctx,  rootPath + "/" + StringUtils.toUpperCaseFirstOne(className) + ".java");
     }
 
-    /**
-     * 生成SpringContextUtil工具类
-     * @return
-     */
-    public boolean generateSpringContextUtil() {
-        logger.info("生成SpringContextUtil工具类……");
-        // 加载模板
-        Template entityTpt = ve.getTemplate("templates/util/springContextUtil.vm");
-        // 设置模板填充内容
-        VelocityContext ctx = new VelocityContext();
-        ctx.put("packagePath", packagePath);
-        String rootPath = this.javaPath + "/util";
-        File dir = new File(rootPath);
-        dir.mkdirs();
-        return merge(entityTpt,ctx,  rootPath + "/SpringContextUtil.java");
-    }
-
     public boolean generateIndex(String entityName, List<AgileComponent> componentList) {
         logger.info("生成前端index页面……");
         // 加载模板
-        Template entityTpt = ve.getTemplate("templates/vueTemp/index.vm");
+        Template entityTpt = ve.getTemplate("velocity/index.vm");
         // 设置模板填充内容
         VelocityContext ctx = new VelocityContext();
         ctx.put("moduleName", moduleName);
@@ -247,6 +231,7 @@ public class GeneratorUtil {
         //获取类路径下的配置文件
         URL url = GeneratorUtil.class.getClassLoader().getResource("generatorConfig.xml");
         File configFile = new File(url.getFile());
+//        File configFile = new File(this.javaPath);
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(configFile);
         DefaultShellCallback callback = new DefaultShellCallback(overwrite);

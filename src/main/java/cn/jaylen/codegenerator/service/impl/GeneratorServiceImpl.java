@@ -14,10 +14,10 @@ import cn.jaylen.codegenerator.entity.example.AgileComponentExample;
 import cn.jaylen.codegenerator.entity.example.AgileEntityExample;
 import cn.jaylen.codegenerator.service.AgileSchemaService;
 import cn.jaylen.codegenerator.service.GeneratorService;
+import cn.jaylen.codegenerator.util.DatabaseUtil;
 import cn.jaylen.codegenerator.util.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -89,7 +89,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                 });
             } else if ("java".equals(generateType)) {
                 // 生成后端代码
-                generateBackendCode(packagePath, moduleName, tableNames, jdbcMap);
+                generateBackendCode(packagePath, moduleName, tableNames, jdbcMap, entityList.get(0).getConId(), entityList.get(0).getDatabaseName());
             }
         }
 
@@ -144,7 +144,8 @@ public class GeneratorServiceImpl implements GeneratorService {
      * @param jdbc ： 数据库连接信息
      * @return
      */
-    private boolean generateBackendCode(String packagePath, String moduleName, List<String> tableNames, Map<String, Object> jdbc ){
+    private boolean generateBackendCode(String packagePath, String moduleName, List<String> tableNames,
+                                        Map<String, Object> jdbc, long conId, String databaseName){
         GeneratorUtil util = GeneratorUtil.getGeneratorUtil(packagePath, moduleName);
         try{
             // 生成mybatis-generator配置文件
@@ -152,11 +153,20 @@ public class GeneratorServiceImpl implements GeneratorService {
             // 执行mybatis-generator代码生成器
             util.mybatis_generator();
 
+            DatabaseConnection connection = connectionMapper.selectByPrimaryKey(conId);
+            DatabaseUtil databaseUtil = new DatabaseUtil(connection);
+
             tableNames.forEach((item)->{
+                List<Map<String,Object>> colums = databaseUtil.getTableColumns(databaseName, item);
+                colums.forEach(map->{
+                    map.put("typeName", DatabaseUtil.getClassType(map.get("typeName").toString()));
+                    map.put("columnName", StringUtils.lineToHump(map.get("columnName").toString()));
+                });
                 item = StringUtils.lineToHump(item);
                 util.generateController(item);
                 util.generateService(item);
                 util.generateServiceImpl(item);
+                util.generateEntity(colums, item, packagePath);
             });
 
             // 文件压缩并下载

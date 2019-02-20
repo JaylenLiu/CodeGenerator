@@ -21,7 +21,26 @@ public class ${upperClassName}ServiceImpl extends BaseServiceImpl<${upperClassNa
 
     @Override
     public List<${upperClassName}> selectAll(){
-        return ${lowerClassName}Mapper.selectByExample(null);
+        ${upperClassName}Example example = new ${upperClassName}Example();
+        return ${lowerClassName}Mapper.selectByExample(example);
+    }
+
+    @Override
+    public Message selectByPages(){
+        // 获取分页信息
+        PageHelper.startPage(PageUtil.getPageNum(), PageUtil.getPageSize());
+        List<${upperClassName}> result;
+        try {
+            result = selectAll();
+        } catch (Exception e) {
+            logger.error("获取${upperClassName}信息失败}！", e);
+            return Message.errorMessage(500, "获取${upperClassName}信息失败！");
+        }
+
+        PageInfo pageInfo = new PageInfo(result);
+        Message<${upperClassName}> message = Message.successMessage(result);
+        message.setPages(pageInfo.getPages());
+        return message;
     }
 
     @Override

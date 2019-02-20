@@ -1,0 +1,296 @@
+<template>
+    <div class="table">
+        <div class="crumbs">
+            <el-breadcrumb separator="/">
+                <el-breadcrumb-item><i class="el-icon-tickets"></i>${moduleName}</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
+        <div class="container" ref="container">
+            <div class="handle-box">
+                <el-button
+                        type="primary"
+                        icon="el-icon-delete"
+                        class="base_btn handle-del mr10"
+                        @click="delAll">批量删除
+                </el-button>
+#foreach(${component} in ${componentList})
+#if(${component.isQuery})
+                <el-input v-model="${component.fieldName}Search"#if(${component.placeholder} != "") placeholder="${component.placeholder}"#end class="handle-input mr10" style="width:200px;"></el-input>
+#end
+#end
+                <el-button
+                        class="base_btn"
+                        type="primary"
+                        icon="el-icon-search"
+                        @click="search">搜索
+                </el-button>
+                <el-button
+                        type="primary"
+                        icon="el-icon-circle-plus-outline"
+                        class="base_btn handle-del mr10"
+                        style="float:right  !important"
+                        @click="add">新增
+                </el-button>
+            </div>
+            <el-table :data="tableData" border style="width: 100%"  @selection-change="handleSelectionChange">
+                <el-table-column type="selection" width="40"></el-table-column>
+                <el-table-column type="index" label="序号"></el-table-column>
+#foreach(${component} in ${componentList})
+                <el-table-column prop="${component.fieldName}" label="${component.label}"></el-table-column>
+#end
+                <el-table-column label="操作" width="180">
+                    <template slot-scope="scope">
+                        <el-button class="han_btn" size="small" type="text" @click="editEvent(scope.row)">编辑</el-button>
+                        <el-button class="han_btn" size="small" type="text" @click="deleteConfirm(scope.row.id)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="pagination">
+                <el-pagination @current-change="handlePageChange" layout="prev, pager, next" :total="pages*pageSize" background>
+                </el-pagination>
+            </div>
+        </div>
+
+        <!-- 编辑弹出框 -->
+        <el-dialog title="operationType" :visible.sync="editVisible" width="500px" @close="cancelEvent('${entityName}Form')">
+            <el-form ref="${entityName}Form"  :model="editData" label-width="100px" :rules="rules" status-icon>
+#foreach(${component} in ${componentList})
+#if(${component.isVisibled})
+                <el-form-item label="${component.label}" prop="${component.fieldName}">
+#if($component.componentType == 'input')
+                    <el-input class="handle-input mr10" v-model="editData.${component.fieldName}" #if(${component.isDisabled}) disabled #end></el-input>
+#elseif(${component.componentType} == 'switch')
+                    <el-switch v-model="editData.${component.fieldName}"></el-switch>
+#elseif(${component.componentType} == 'datePicker')
+                    <el-date-picker type="month" placeholder="选择日期"  v-model="editData.${component.fieldName}" format="yyyy-MM" value-format="yyyy-MM" style="width: 100%;"></el-date-picker>
+#elseif(${component.componentType} == 'dateTimePicker')
+                    <el-date-picker type="datetime" placeholder="选择时间"  v-model="editData.${component.fieldName}" align="right" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></el-date-picker>
+#end
+                </el-form-item>
+#end
+#end
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="cancelEvent('${entityName}Form')">取 消</el-button>
+                <el-button type="primary" @click="submitEvent('${entityName}Form')">确 定</el-button>
+            </span>
+        </el-dialog>
+    </div>
+</template>
+<script>
+    import http from '@util/http';
+    export default {
+        name: '${entityName}Table',
+        data() {
+            return {
+                operationType: '', // 操作类型，编辑/新增
+                editData:{  // 弹出框绑定的数据
+#foreach(${component} in ${componentList})
+                    ${component.fieldName}:#if(!${component.defaultValue})'',
+#end#if(${component.defaultValue})'${component.defaultValue}',
+#end
+#end
+                },
+                editVisible: false, // 是否展示编辑框
+                searchKey: '', // 查询关键字
+                tableData: [], // 表格数据
+#foreach(${component} in ${componentList})
+#if(${component.isQuery})
+                ${component.fieldName}Search:'',
+#end
+#end
+                multipleSelection: [], // 多选id
+                pageNum: 1, // 当前页码
+                pageSize: 10, // 每页显示条数
+                pages: 10, // 总页数
+                rules: {
+#foreach(${component} in ${componentList})
+#if(${component.isRequired})
+                    ${component.fieldName}: [
+                        { required: true, message: '请输入${component.label}', trigger: 'blur' }
+                    ],
+#end
+#end
+                }
+            }
+        },
+        created() {
+            this.initData({
+                searchKey:this.searchKey
+            });
+        },
+        mounted () {
+            this.$refs.container.style.height = '680px';
+        },
+        computed: {
+
+        },
+        methods: {
+            // 初始化数据
+            initData(params) {
+                // 向参数对象中加入分页信息
+                Object.assign(params,{
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize
+                });
+                // 请求后台数据
+                http.get('${moduleName}s', params).then((ret)=>{
+                    this.tableData = ret.data;
+                    this.pages = ret.pages;
+                });
+            },
+
+            // 查询事件
+            search() {
+                this.initData({
+                    searchKey:this.searchKey
+                });
+            },
+            // 新增事件
+            add(){
+                this.editData = {
+#foreach(${component} in ${componentList})
+                    ${component.fieldName}:'',
+#end
+                };
+                this.operationType = "add";
+                this.editVisible = true;
+            },
+            // 分页事件
+            handlePageChange(currentPage){
+                this.pageNum = currentPage;
+                this.initData({
+                    searchKey:this.searchKey
+                });
+            },
+            // 多选事件
+            handleSelectionChange(val) {
+                let ids = val.map((row)=>{
+                    return row.id;
+                });
+                this.multipleSelection = ids;
+            },
+            // 删除多条记录
+            delAll() {
+                const length = this.multipleSelection.length;
+                if (length === 0) {
+                    this.$alert('您未选择任何数据！', '警告', {
+                        confirmButtonText: '确定',
+                    });
+                } else {
+                    this.deleteConfirm(this.multipleSelection);
+                }
+            },
+            // 编辑事件
+            edit(row) {
+                this.editData = {
+#foreach(${component} in ${componentList})
+                    ${component.fieldName}:row.${component.fieldName},
+#end
+                };
+                this.operationType = "edit";
+                this.editVisible = true;
+            },
+            // 删除确认
+            deleteConfirm(param) {
+                this.$confirm('您确定要删除数据吗?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    let ids = [];
+                    if(Array.isArray(param)){
+                        ids = param;
+                    } else {
+                        ids.push(param);
+                    }
+                    //  请求后台删除数据
+                    http.del('${moduleName}s', {ids:ids}).then((ret)=>{
+                        if(ret.httpCode === 200){
+                            this.$message({
+                                type: 'success',
+                                message: '删除成功！'
+                            });
+                            this.initData({searchKey:this.searchKey});
+                        } else {
+                            this.$message({
+                                type: 'error',
+                                message: ret.message
+                            });
+                        }
+                    });
+                }).catch(() => {
+                });
+            },
+            // 表单提交
+#set($temp='this.$refs[formName].validate((valid) =>')
+            submit(formName){
+                $temp {
+                    if (valid) {
+                        this.editVisible = false;
+                        if (this.operationType === 'edit') {
+                            http.put('${moduleName}', this.editData).then((ret)=>{
+                                if(ret.httpCode === 200){
+                                    this.$message({
+                                        type: 'success',
+                                        message: '修改成功！'
+                                    });
+                                    this.initData({searchKey:this.searchKey});
+                                } else {
+                                    this.$message({
+                                        type: 'error',
+                                        message: ret.message
+                                    });
+                                }
+                            });
+                        } else if (this.operationType === 'add'){
+                            let params = {
+#foreach(${component} in ${componentList})
+                                ${component.fieldName}:this.editData.${component.fieldName},
+#end
+                            };
+                            http.post('${moduleName}', params).then((ret)=>{
+                                if(ret.httpCode === 200){
+                                    this.$message({
+                                        type: 'success',
+                                        message: '新增成功！'
+                                    });
+                                    this.initData({searchKey:this.searchKey});
+                                } else {
+                                    this.$message({
+                                        type: 'error',
+                                        message: ret.message
+                                    });
+                                }
+                            });
+                        }
+                    }
+                });
+            },
+        }
+    }
+</script>
+
+<style scoped>
+    .handle-box {
+        margin-bottom: 13px;
+    }
+
+    .handle-select {
+        width: 120px;
+    }
+
+    .handle-input {
+        width: 300px;
+        display: inline-block;
+    }
+    .del-dialog-cnt{
+        font-size: 16px;
+        text-align: center
+    }
+    .container{
+        margin-top: 10px;
+    }
+</style>
+
+
