@@ -5,11 +5,25 @@
 然后使用velocity模板引擎生成service接口和实现类以及controller。并重写了entity。
 
 ### 程序入口
-1. 程序入口在test目录下CodeGenerator类，使用junit运行。
-2. 前端页面存放在resource/static下，启动springboot后，访问localhost:8082/codegenerator/index.html即可。
+1. 前端页面存放在resource/static下，启动springboot后，访问localhost:8082/codegenerator/index.html即可。
 
 ### 准备工作
 - 首先，初始化数据库，sql文件在doc/sql下。
+- 在application.yml 中配置数据库信息。
+
+   ```
+       url: jdbc:mysql://localhost:3306/codegenerator
+       username: root
+       password: xxxxxx
+   ```
+
+- 在application.yml 中配置代码的输出路径。
+
+   ```
+   
+   #代码输出目录
+   outputPath: d:/code
+   ```
 
 - 页面登录密码：admin/123456
 
@@ -21,7 +35,19 @@
 - 最后安装流程指引完成页面生成。
    ![](./src/doc/img/codegenerator.png)
 
-### 注意
+### 缺点
+
+- 代码生成器只能根据数据库表生成前后端源码，并没有生成所在的框架环境。生成的源代码文件需要依赖于特定环境才能适用。如生成的后台代码可能适用到一些工具类，在本项目结构下是适用的，但如果其它环境则需要修改才能适用。当然你也可以直接修改模板文件，dao层及以下是mybatis-generator生成，如需改动，需要修改mybatis-generator官方源码。
+
+  [mybatis]: https://github.com/mybatis/generator	"mybatis"
+
+  本系统的模板文件在resource/velocity/ 下，适用velocity后端模板引擎，可以自行修改。
+
+- 前端代码生成文件为vue源码文件，项目路径为：
+
+  [codegenerator_web]: https://github.com/JaylenLiu/CodeGenerator_web.git	"codegenerator_web"
+
+  
 
 
 
@@ -43,5 +69,5 @@ mybatis-generator是mybatis官方提供的代码生成器。其主要根据数�
 - commom包主要是公共类。包括统一异常处理类，自定义异常类，http状态码枚举类，分页过滤器，统一的信息类以及代码生成的工具类。
 - entity包主要是实体类。生成的实体类与普通实体类不同之处在于使用了lombok。只需要在实体声明前面加上
   @Data,即可自动添加get、set、toString、hashcode、equals等。如使用Intellij IDEA 则需要安装插件才能识别。
-- util: 工具类中DatabaseUtil可以获取数据库的元信息。StringContextUtil可以获取spring上下文。
+- util: 工具类中DatabaseUtil可以获取数据库的元信息。StringContextUtil可以获取spring上下文,但只能通过request获取，使用时不太方便，然后新增ApplicationContextProvider满足更多场景。
 - aspect: 通过aop进行日志记录。

@@ -61,5 +61,5 @@ logging:
   config: classpath:logback-spring.xml
   path: D:/codegeneratorlog/
 
-#codegenerator properties
+#代码输出目录
 outputPath: d:/code
