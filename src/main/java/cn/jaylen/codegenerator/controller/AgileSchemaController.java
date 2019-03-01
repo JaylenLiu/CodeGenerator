@@ -40,7 +40,7 @@ public class AgileSchemaController{
     @ApiOperation(value = "删除AgileSchema", notes = "删除AgileSchema")
     @DeleteMapping("/agileSchema")
     public Message deleteAgileSchema(Long id){
-        return Message.successMessage(service.deleteByPrimaryKey(id));
+        return Message.successMessage(service.deleteAgileSchema(id));
     }
 
     @ApiOperation(value = "删除多个", notes = "删除多个")

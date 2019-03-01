@@ -183,8 +183,9 @@ public class DatabaseUtil {
             case "TEXT" :
             case "VARCHAR" : return "String";
             case "BIGINT": return "Long";
+            case "BIT":return "Boolean";
             case "TINYINT":
-            case "BIT":
+            case "INT UNSIGNED":
             case "INT": return  "Integer";
             case "FLOAT" : return "Float";
             case "DECIMAL" :return "BigDecimal";

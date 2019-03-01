@@ -38,7 +38,7 @@ public class GeneratorUtil {
     private static GeneratorUtil generatorUtil = null;
     private String packagePath;
     private String javaPath;
-    private String moduleName;
+//    private String moduleName;
     private String webPath;
 
     private GeneratorUtil(String packagePath){
@@ -53,6 +53,7 @@ public class GeneratorUtil {
 //        this.javaPath = this.getClass().getClassLoader().getResource("").getPath() +
 //                "src/main/java/" + packagePath.replace('.', '/');
         this.javaPath = "d:/code/" + packagePath.replace('.', '/');
+        this.webPath = "D:\\code\\";
     }
 
     private GeneratorUtil(String packagePath, String moduleName){
@@ -64,7 +65,7 @@ public class GeneratorUtil {
         ve.setProperty("output.encoding","UTF-8");
         ve.init();
         this.packagePath = packagePath;
-        this.moduleName = moduleName;
+//        this.moduleName = moduleName;
         this.javaPath = "d:/code/" + packagePath.replace('.', '/');
 //        this.javaPath = this.getClass().getClassLoader().getResource("").getPath() +
 //                "src/temp/java/" + moduleName + "/" + packagePath.replace('.', '/');
@@ -74,17 +75,10 @@ public class GeneratorUtil {
     }
 
     public static GeneratorUtil getGeneratorUtil(String packagePath){
-        if (generatorUtil == null) {
-            generatorUtil = new GeneratorUtil(packagePath);
-        }
-        return generatorUtil;
-    }
-
-    public static GeneratorUtil getGeneratorUtil(String packagePath, String moduleName){
-        if (generatorUtil == null) {
-            generatorUtil = new GeneratorUtil(packagePath, moduleName);
-        }
-        return generatorUtil;
+//        if (generatorUtil == null) {
+//            generatorUtil = new GeneratorUtil(packagePath);
+//        }
+        return new GeneratorUtil(packagePath);
     }
 
     /**
@@ -210,6 +204,7 @@ public class GeneratorUtil {
         Template entityTpt = ve.getTemplate("velocity/index.vm");
         // 设置模板填充内容
         VelocityContext ctx = new VelocityContext();
+        String moduleName = StringUtils.toLowerCaseFirstOne(entityName);
         ctx.put("moduleName", moduleName);
         ctx.put("entityName", entityName);
         ctx.put("componentList", componentList);

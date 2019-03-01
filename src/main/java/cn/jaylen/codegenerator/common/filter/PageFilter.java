@@ -33,7 +33,7 @@ public class PageFilter implements Filter {
         String pageSize = httpRequest.getParameter("pageSize");
         if (!StringUtils.isNullOrEmpty(pageNum)){
             PageUtil.setPageNum(Integer.parseInt(pageNum));
-        } else
+        }
 
         if (!StringUtils.isNullOrEmpty(pageSize)){
             PageUtil.setPageSize(Integer.parseInt(pageSize));

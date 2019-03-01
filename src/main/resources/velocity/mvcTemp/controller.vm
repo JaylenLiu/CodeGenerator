@@ -4,7 +4,7 @@ package ${packagePath}.controller;
 ## 类名首字母小写
 #set($lowerClassName = $className.substring(0,1).toLowerCase()+ $className.substring(1))
 import ${packagePath}.entity.${upperClassName};
-import ${packagePath}.service.impl.${upperClassName}ServiceImpl;
+import ${packagePath}.service.${upperClassName}Service;
 import ${packagePath}.common.Message;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ${upperClassName}Controller{
     @Autowired
-    ${upperClassName}ServiceImpl service;
+    ${upperClassName}Service service;
 
     @ApiOperation(value = "根据id查询", notes = "根据id查询")
     @GetMapping(value = "/${lowerClassName}")
@@ -24,13 +24,15 @@ public class ${upperClassName}Controller{
     @ApiOperation(value = "获取所有数据", notes = "获取所有数据")
     @GetMapping("/${lowerClassName}s")
     public Message selectAll(){
-        return Message.successMessage(service.selectAll());
+        ${upperClassName}Example example = new ${upperClassName}Example();
+        return Message.successMessage(service.selectAll(example));
     }
 
     @ApiOperation(value = "分页获取数据", notes = "分页获取数据")
     @GetMapping("/${lowerClassName}sPages")
     public Message selectByPages(){
-        return service.selectByPages();
+        ${upperClassName}Example example = new ${upperClassName}Example();
+        return service.selectByPages(example);
     }
 
     @ApiOperation(value = "新增${upperClassName}", notes = "新增${upperClassName}")
@@ -60,6 +62,6 @@ public class ${upperClassName}Controller{
     @PutMapping(value = "/${lowerClassName}")
     public Message update${upperClassName}(${upperClassName} ${lowerClassName}){
         ${lowerClassName}.preUpdate();
-        return Message.successMessage(service.updateByPrimaryKey(${lowerClassName}));
+        return Message.successMessage(service.updateByPrimaryKeySelective(${lowerClassName}));
     }
 }

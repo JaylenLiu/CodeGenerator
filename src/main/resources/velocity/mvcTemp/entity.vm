@@ -3,6 +3,8 @@
 package ${packagePath}.entity;
 
 import ${packagePath}.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 ##import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import java.util.Date;
@@ -13,6 +15,10 @@ public class ${upperClassName} extends BaseEntity{
 #foreach(${column} in ${columns})
 #if( $!column.remarks!= "")
     // $column.remarks
+#end
+#if(${column.typeName} == 'Date')
+    @JsonFormat(timezone = "GMT+8", pattern = "YYYY-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 #end
     private ${column.typeName} ${column.columnName};
 #end

@@ -1,7 +1,7 @@
 package cn.jaylen.codegenerator.base;
 
 import ch.qos.logback.classic.Logger;
-import cn.jaylen.codegenerator.util.SpringContextUtil;
+import cn.jaylen.codegenerator.util.ApplicationContextProvider;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
@@ -21,7 +21,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 
     private Object getMapperObj (){
         if (mapperObj == null) {
-            mapperObj = SpringContextUtil.getBean(entityClass.getSimpleName() + "Mapper");
+            mapperObj = ApplicationContextProvider.getBean(entityClass.getSimpleName() + "Mapper");
         }
         return mapperObj;
     }

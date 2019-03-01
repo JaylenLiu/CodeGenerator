@@ -171,6 +171,4 @@ public class ResourceServiceImpl implements ResourceService {
         }
         return res;
     }
-
-
 }

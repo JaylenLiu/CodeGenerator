@@ -106,7 +106,9 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
         <!-- 指定数据库表 -->
-        <table tableName="agile_component"></table>
+        <table tableName="agile_component">
+
+        </table>
         <table tableName="agile_entity"></table>
         <table tableName="agile_schema"></table>
         <table tableName="database_connection"></table>

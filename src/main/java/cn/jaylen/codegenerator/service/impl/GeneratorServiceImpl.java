@@ -2,6 +2,8 @@ package cn.jaylen.codegenerator.service.impl;
 
 import ch.qos.logback.classic.Logger;
 import cn.jaylen.codegenerator.common.Message;
+import cn.jaylen.codegenerator.common.exception.CustomException;
+import cn.jaylen.codegenerator.common.exception.HttpCodeEnum;
 import cn.jaylen.codegenerator.common.generator.GeneratorUtil;
 import cn.jaylen.codegenerator.dao.AgileComponentMapper;
 import cn.jaylen.codegenerator.dao.AgileEntityMapper;
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,8 +95,6 @@ public class GeneratorServiceImpl implements GeneratorService {
                 generateBackendCode(packagePath, moduleName, tableNames, jdbcMap, entityList.get(0).getConId(), entityList.get(0).getDatabaseName());
             }
         }
-
-
         return Message.successMessage(1);
     }
 
@@ -125,13 +126,13 @@ public class GeneratorServiceImpl implements GeneratorService {
     }
 
     public boolean generateWebCode(String packagePath, String moduleName, String entityName, List<AgileComponent> componentList){
-        GeneratorUtil util = GeneratorUtil.getGeneratorUtil(packagePath, moduleName);
+        GeneratorUtil util = GeneratorUtil.getGeneratorUtil(packagePath);
         try{
             util.generateIndex(entityName,componentList);
             return true;
         } catch (Exception e) {
-            logger.error("生成前台代码失败！");
-            return false;
+            logger.error("生成前台代码失败！",e);
+            throw new CustomException("生成前台代码失败！", HttpCodeEnum.HTTP_500.getCode());
         }
 
     }
@@ -146,8 +147,10 @@ public class GeneratorServiceImpl implements GeneratorService {
      */
     private boolean generateBackendCode(String packagePath, String moduleName, List<String> tableNames,
                                         Map<String, Object> jdbc, long conId, String databaseName){
-        GeneratorUtil util = GeneratorUtil.getGeneratorUtil(packagePath, moduleName);
+        GeneratorUtil util = GeneratorUtil.getGeneratorUtil(packagePath);
         try{
+            File dir = new File("d:/code/" + packagePath);
+            dir.mkdirs();
             // 生成mybatis-generator配置文件
             util.generateConfig(tableNames, jdbc);
             // 执行mybatis-generator代码生成器
