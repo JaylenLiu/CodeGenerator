@@ -20,6 +20,7 @@ import cn.jaylen.codegenerator.util.DatabaseUtil;
 import cn.jaylen.codegenerator.util.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -36,8 +37,8 @@ import java.util.stream.Collectors;
 @Service
 public class GeneratorServiceImpl implements GeneratorService {
 
-//    @Value("${outputPath}")
-//    private String outputPath;
+    @Value("${outputPath}")
+    private String outputPath;
 
     private Logger logger = (Logger) LoggerFactory.getLogger(GeneratorServiceImpl.class);
 
@@ -126,7 +127,7 @@ public class GeneratorServiceImpl implements GeneratorService {
     }
 
     public boolean generateWebCode(String packagePath, String moduleName, String entityName, List<AgileComponent> componentList){
-        GeneratorUtil util = GeneratorUtil.getGeneratorUtil(packagePath);
+        GeneratorUtil util = GeneratorUtil.getGeneratorUtil(outputPath,packagePath);
         try{
             util.generateIndex(entityName,componentList);
             return true;
@@ -147,9 +148,9 @@ public class GeneratorServiceImpl implements GeneratorService {
      */
     private boolean generateBackendCode(String packagePath, String moduleName, List<String> tableNames,
                                         Map<String, Object> jdbc, long conId, String databaseName){
-        GeneratorUtil util = GeneratorUtil.getGeneratorUtil(packagePath);
+        GeneratorUtil util = GeneratorUtil.getGeneratorUtil(outputPath,packagePath);
         try{
-            File dir = new File("d:/code/" + packagePath);
+            File dir = new File(outputPath + "/" + packagePath.replace(".", "/"));
             dir.mkdirs();
             // 生成mybatis-generator配置文件
             util.generateConfig(tableNames, jdbc);

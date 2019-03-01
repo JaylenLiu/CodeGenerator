@@ -62,4 +62,4 @@ logging:
   path: D:/codegeneratorlog/
 
 #codegenerator properties
-packagePath: cn.jaylen.codegenerator
+outputPath: d:/code

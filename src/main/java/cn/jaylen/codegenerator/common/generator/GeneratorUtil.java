@@ -41,7 +41,7 @@ public class GeneratorUtil {
 //    private String moduleName;
     private String webPath;
 
-    private GeneratorUtil(String packagePath){
+    private GeneratorUtil(String outputPath, String packagePath){
         logger.info("模板引擎初始化……");
         // 初始化模板引擎
         ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
@@ -52,33 +52,14 @@ public class GeneratorUtil {
         this.packagePath = packagePath;
 //        this.javaPath = this.getClass().getClassLoader().getResource("").getPath() +
 //                "src/main/java/" + packagePath.replace('.', '/');
-        this.javaPath = "d:/code/" + packagePath.replace('.', '/');
-        this.webPath = "D:\\code\\";
+        this.javaPath = outputPath + "/rest/" + packagePath.replace('.', '/');
+        this.webPath = outputPath + "/web/";
     }
-
-    private GeneratorUtil(String packagePath, String moduleName){
-        logger.info("模板引擎初始化……");
-        // 初始化模板引擎
-        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-        ve.setProperty("input.encoding","UTF-8");
-        ve.setProperty("output.encoding","UTF-8");
-        ve.init();
-        this.packagePath = packagePath;
-//        this.moduleName = moduleName;
-        this.javaPath = "d:/code/" + packagePath.replace('.', '/');
-//        this.javaPath = this.getClass().getClassLoader().getResource("").getPath() +
-//                "src/temp/java/" + moduleName + "/" + packagePath.replace('.', '/');
-//        this.webPath = this.getClass().getClassLoader().getResource("").getPath() +
-//                "src/temp/web/" + moduleName;
-        this.webPath = "D:\\code\\";
-    }
-
-    public static GeneratorUtil getGeneratorUtil(String packagePath){
+    public static GeneratorUtil getGeneratorUtil(String outputPath,String packagePath){
 //        if (generatorUtil == null) {
 //            generatorUtil = new GeneratorUtil(packagePath);
 //        }
-        return new GeneratorUtil(packagePath);
+        return new GeneratorUtil(outputPath,packagePath);
     }
 
     /**

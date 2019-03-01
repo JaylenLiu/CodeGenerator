@@ -93,7 +93,7 @@ public class CodeGenerator {
     @Test
     public void generator(){
         String packagePath = "cn.jaylen.codegenerator";
-        GeneratorUtil generatorUtil = GeneratorUtil.getGeneratorUtil(packagePath);
+        GeneratorUtil generatorUtil = GeneratorUtil.getGeneratorUtil("D:/code",packagePath);
         try {
             String[] tables = getTables();
             generatorUtil.generateConfig(tables, buildJdbcMap());

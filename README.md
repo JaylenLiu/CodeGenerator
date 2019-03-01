@@ -19,7 +19,7 @@
    ![](./src/doc/img/database.png)
 
 - 最后安装流程指引完成页面生成。
-   ![](./src/doc/img/codegengerator.png)
+   ![](./src/doc/img/codegenerator.png)
 
 ### 注意
 
