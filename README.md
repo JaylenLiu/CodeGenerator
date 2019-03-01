@@ -37,15 +37,11 @@
 
 ### 缺点
 
-- 代码生成器只能根据数据库表生成前后端源码，并没有生成所在的框架环境。生成的源代码文件需要依赖于特定环境才能适用。如生成的后台代码可能适用到一些工具类，在本项目结构下是适用的，但如果其它环境则需要修改才能适用。当然你也可以直接修改模板文件，dao层及以下是mybatis-generator生成，如需改动，需要修改mybatis-generator官方源码。
-
-  [mybatis]: https://github.com/mybatis/generator	"mybatis"
+- 代码生成器只能根据数据库表生成前后端源码，并没有生成所在的框架环境。生成的源代码文件需要依赖于特定环境才能适用。如生成的后台代码可能适用到一些工具类，在本项目结构下是适用的，但如果其它环境则需要修改才能适用。当然你也可以直接修改模板文件，dao层及以下是mybatis-generator生成，如需改动，需要修改mybatis-generator官方源码。[mybatis-generator](https://github.com/mybatis/generator)
 
   本系统的模板文件在resource/velocity/ 下，适用velocity后端模板引擎，可以自行修改。
 
-- 前端代码生成文件为vue源码文件，项目路径为：
-
-  [codegenerator_web]: https://github.com/JaylenLiu/CodeGenerator_web.git	"codegenerator_web"
+- 前端代码生成文件为vue源码文件，项目路径为：[codegenerator_web](https://github.com/JaylenLiu/CodeGenerator_web.git)
 
   
 
