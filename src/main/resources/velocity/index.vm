@@ -152,12 +152,13 @@
                     searchKey:this.searchKey
                 });
             },
-#set($cancelEvent='this.$refs[formName].clearValidate();')
+#set($clearValidate='this.$refs[formName].clearValidate();')
+#set($resetFields='this.$refs[formName].resetFields();')
             cancelEvent(formName) {
-                this.project = {};
+                $clearValidate
                 this.editVisible = false;
                 // 清除验证标记
-                $cancelEvent
+                $resetFields
             },
             // 新增事件
             addEvent(){
@@ -241,7 +242,6 @@
             submitEvent(formName){
                 $temp {
                     if (valid) {
-                        this.editVisible = false;
                         let loadingInstance = Loading.service(this.loadingOptions);
                         if (this.operationType === '编辑') {
                             http.put('${moduleName}', this.editData).then((ret)=>{

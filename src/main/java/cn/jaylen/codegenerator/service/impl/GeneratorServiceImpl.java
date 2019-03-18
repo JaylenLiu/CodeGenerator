@@ -150,7 +150,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                                         Map<String, Object> jdbc, long conId, String databaseName){
         GeneratorUtil util = GeneratorUtil.getGeneratorUtil(outputPath,packagePath);
         try{
-            File dir = new File(outputPath + "/" + packagePath.replace(".", "/"));
+            File dir = new File(outputPath + "/rest/" + packagePath.replace(".", "/"));
             dir.mkdirs();
             // 生成mybatis-generator配置文件
             util.generateConfig(tableNames, jdbc);
