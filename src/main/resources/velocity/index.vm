@@ -136,8 +136,8 @@
                 });
                 http.get('${moduleName}sPages', params).then((ret)=>{
                     if(ret.httpCode === 200){
-                        this.tableData = ret.data;
-                        this.pages = ret.pages;
+                        this.tableData = ret.data.list;
+                        this.pages = ret.data.pages;
                     } else {
                         this.$message({
                             type: 'error',
