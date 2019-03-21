@@ -3,10 +3,7 @@ package cn.jaylen.codegenerator.util;
 import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -137,9 +134,9 @@ public class ZipUtils {
 
     public static void main(String[] args) throws Exception {
         /** 测试压缩方法1  */
-        delFolder("G:\\zip");
-//        FileOutputStream fos1 = new FileOutputStream(new File("G:/zip/test.zip"));
-//        ZipUtils.toZip("G:\\pgtd\\codegenerator\\src\\temp", fos1,true);
+//        delFolder("D:\\code");
+        FileOutputStream fos1 = new FileOutputStream(new File("D:/zip/test.zip"));
+        ZipUtils.toZip("D:\\code", fos1,true);
 
     }
 

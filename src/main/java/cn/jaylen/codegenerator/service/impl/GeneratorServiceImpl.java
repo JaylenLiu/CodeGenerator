@@ -17,13 +17,18 @@ import cn.jaylen.codegenerator.entity.example.AgileEntityExample;
 import cn.jaylen.codegenerator.service.AgileSchemaService;
 import cn.jaylen.codegenerator.service.GeneratorService;
 import cn.jaylen.codegenerator.util.DatabaseUtil;
+import cn.jaylen.codegenerator.util.SpringContextUtil;
 import cn.jaylen.codegenerator.util.StringUtils;
+import cn.jaylen.codegenerator.util.ZipUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +101,16 @@ public class GeneratorServiceImpl implements GeneratorService {
                 generateBackendCode(packagePath, moduleName, tableNames, jdbcMap, entityList.get(0).getConId(), entityList.get(0).getDatabaseName());
             }
         }
+        // 文件压缩并下载
+        try {
+            SpringContextUtil.getResponse().setHeader("Content-disposition", "attachment; filename=code.zip");
+            ServletOutputStream outputStream = SpringContextUtil.getResponse().getOutputStream();
+            ZipUtils.toZip(outputPath , outputStream,true);
+            // 删除临时目录
+            ZipUtils.delFolder(outputPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return Message.successMessage(1);
     }
 
@@ -135,7 +150,6 @@ public class GeneratorServiceImpl implements GeneratorService {
             logger.error("生成前台代码失败！",e);
             throw new CustomException("生成前台代码失败！", HttpCodeEnum.HTTP_500.getCode());
         }
-
     }
 
     /**
@@ -172,11 +186,6 @@ public class GeneratorServiceImpl implements GeneratorService {
                 util.generateServiceImpl(item);
                 util.generateEntity(colums, item, packagePath);
             });
-
-            // 文件压缩并下载
-//            ZipUtils.toZip(outputPath, SpringContextUtil.getResponse().getOutputStream(),true);
-            // 删除临时目录
-//            ZipUtils.delFolder(outputPath);
             return true;
         } catch (Exception e){
             logger.error("生成后端代码失败", e);
