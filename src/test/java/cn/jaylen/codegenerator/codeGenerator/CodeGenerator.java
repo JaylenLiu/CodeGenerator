@@ -23,9 +23,9 @@ public class CodeGenerator {
     private Map<String,Object> buildJdbcMap(){
         HashMap<String,Object> jdbcMap = new HashMap<>();
         jdbcMap.put("driver", "com.mysql.jdbc.Driver");
-        jdbcMap.put("url", "jdbc:mysql://127.0.0.1:3306/codegenerator");
+        jdbcMap.put("url", "jdbc:mysql://10.200.132.165:3306/pg-wtms");
         jdbcMap.put("username", "root");
-        jdbcMap.put("password", "123456");
+        jdbcMap.put("password", "Pioneer@2017");
         return jdbcMap;
     }
 
@@ -34,7 +34,7 @@ public class CodeGenerator {
      * @return
      */
     private String[] getTables(){
-        String[] tables = new String[]{"agile_component", "agile_entity", "agile_schema"};
+        String[] tables = new String[]{"project_plan_staff_level"};
         return tables;
     }
 
@@ -44,8 +44,8 @@ public class CodeGenerator {
      * @return
      */
     private List<Map<String,Object>> getColumn(String tableName){
-        DatabaseUtil databaseUtil = new DatabaseUtil("127.0.0.1", "3306", "root", "123456");
-        List<Map<String,Object>> result = databaseUtil.getTableColumns("codegenerator", tableName);
+        DatabaseUtil databaseUtil = new DatabaseUtil("10.200.132.165", "3306", "root", "Pioneer@2017");
+        List<Map<String,Object>> result = databaseUtil.getTableColumns("pg-wtms", tableName);
         result.forEach(map->{
             map.put("typeName", changeType(map.get("typeName").toString()));
             map.put("columnName", StringUtils.lineToHump(map.get("columnName").toString()));
@@ -92,7 +92,7 @@ public class CodeGenerator {
 
     @Test
     public void generator(){
-        String packagePath = "cn.jaylen.codegenerator";
+        String packagePath = "cn.pioneer.dcim.wtms";
         GeneratorUtil generatorUtil = GeneratorUtil.getGeneratorUtil("D:/code",packagePath);
         try {
             String[] tables = getTables();
