@@ -30,7 +30,6 @@ public class AgileEntityServiceImpl extends BaseServiceImpl<AgileEntity> impleme
     @Override
     public List<AgileEntity> selectAll(){
         AgileEntityExample example = new AgileEntityExample();
-        example.createCriteria().andIdIsNotNull();
         return agileEntityMapper.selectByExample(example);
     }
 

@@ -106,7 +106,7 @@ public class GeneratorUtil {
      *  生成controller
      * @param className
      */
-    public boolean generateController(String className){
+    public boolean generateController(String className, String primaryKeyType){
         logger.info("生成"+className+"Controller……");
         // 加载模板
         Template entityTpt = ve.getTemplate("velocity/mvcTemp/controller.vm");
@@ -114,6 +114,7 @@ public class GeneratorUtil {
         VelocityContext ctx = new VelocityContext();
         ctx.put("packagePath", packagePath);
         ctx.put("className", className);
+        ctx.put("primaryKeyType", primaryKeyType);
         String rootPath = this.javaPath + "/controller";
         File dir = new File(rootPath);
         dir.mkdirs();
@@ -125,7 +126,7 @@ public class GeneratorUtil {
      * @param className
      * @return
      */
-    public boolean generateService(String className) {
+    public boolean generateService(String className, String primaryKeyType) {
         logger.info("生成" +className+ "Service接口……");
         // 加载模板
         Template entityTpt = ve.getTemplate("velocity/mvcTemp/service.vm");
@@ -133,6 +134,7 @@ public class GeneratorUtil {
         VelocityContext ctx = new VelocityContext();
         ctx.put("packagePath", packagePath);
         ctx.put("className", className);
+        ctx.put("primaryKeyType", primaryKeyType);
         String rootPath = this.javaPath + "/service";
         File dir = new File(rootPath);
         dir.mkdirs();
@@ -144,7 +146,7 @@ public class GeneratorUtil {
      * @param className
      * @return
      */
-    public boolean generateServiceImpl(String className) {
+    public boolean generateServiceImpl(String className, String primaryKeyType) {
         logger.info("生成" + className + "Service实现类……");
         // 加载模板
         Template entityTpt = ve.getTemplate("velocity/mvcTemp/serviceImpl.vm");
@@ -152,6 +154,7 @@ public class GeneratorUtil {
         VelocityContext ctx = new VelocityContext();
         ctx.put("packagePath", packagePath);
         ctx.put("className", className);
+        ctx.put("primaryKeyType", primaryKeyType);
         String rootPath = this.javaPath + "/service/impl";
         File dir = new File(rootPath);
         dir.mkdirs();

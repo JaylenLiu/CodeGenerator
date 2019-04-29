@@ -176,14 +176,23 @@ public class GeneratorServiceImpl implements GeneratorService {
 
             tableNames.forEach((item)->{
                 List<Map<String,Object>> colums = databaseUtil.getTableColumns(databaseName, item);
-                colums.forEach(map->{
+                List<Map<String,Object>> primarykeys = databaseUtil.getPrimaryKeys(databaseName, item);
+                String primaryKeyType = null;
+                for (int i = 0; i < colums.size(); i++) {
+                    Map<String, Object> map = colums.get(i);
                     map.put("typeName", DatabaseUtil.getClassType(map.get("typeName").toString()));
                     map.put("columnName", StringUtils.lineToHump(map.get("columnName").toString()));
-                });
+                    if (primarykeys != null && primarykeys.size() > 0) {
+                        if (map.get("columnName").toString().equals(primarykeys.get(0).get("column_name").toString())){
+                            map.put("primaryKey", true);
+                            primaryKeyType = map.get("typeName").toString();
+                        }
+                    }
+                }
                 item = StringUtils.lineToHump(item);
-                util.generateController(item);
-                util.generateService(item);
-                util.generateServiceImpl(item);
+                util.generateController(item, primaryKeyType);
+                util.generateService(item, primaryKeyType);
+                util.generateServiceImpl(item, primaryKeyType);
                 util.generateEntity(colums, item, packagePath);
             });
             return true;

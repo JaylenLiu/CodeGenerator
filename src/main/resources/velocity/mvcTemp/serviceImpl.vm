@@ -51,7 +51,7 @@ public class ${upperClassName}ServiceImpl extends BaseServiceImpl<${upperClassNa
     }
 
     @Override
-    public int deleteByIDs(Integer[] ids){
+    public int deleteByIDs(${primaryKeyType}[] ids){
         ${upperClassName}Example example = new ${upperClassName}Example();
         example.createCriteria().andIdIn(Arrays.asList(ids));
         return ${lowerClassName}Mapper.deleteByExample(example);

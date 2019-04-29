@@ -11,5 +11,5 @@ import java.util.List;
 public interface ${upperClassName}Service extends BaseService<${upperClassName}>{
     List<${upperClassName}> selectAll(${upperClassName}Example example);
     Message selectByPages(${upperClassName}Example example);
-    int deleteByIDs(Integer[] ids);
+    int deleteByIDs(${primaryKeyType}[] ids);
 }

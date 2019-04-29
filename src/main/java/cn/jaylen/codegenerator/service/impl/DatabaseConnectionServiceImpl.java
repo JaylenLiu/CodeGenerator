@@ -17,8 +17,7 @@ public class DatabaseConnectionServiceImpl extends BaseServiceImpl<DatabaseConne
 
     @Override
     public List<DatabaseConnection> selectAll(){
-    DatabaseConnectionExample example = new DatabaseConnectionExample();
-        example.createCriteria().andIdIsNotNull();
+        DatabaseConnectionExample example = new DatabaseConnectionExample();
         return databaseConnectionMapper.selectByExample(example);
     }
 

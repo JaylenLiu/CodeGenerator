@@ -68,7 +68,6 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public Message getAllResources() {
         SysResourceExample example = new SysResourceExample();
-        example.createCriteria().andIdIsNotNull();
         try {
             return Message.successMessage(sysResourceMapper.selectByExample(example));
         } catch (Exception e) {

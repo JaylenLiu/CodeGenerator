@@ -157,7 +157,6 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Message getAllAccount() {
         SysAccountExample example = new SysAccountExample();
-        example.createCriteria().andIdIsNotNull();
         try{
             return Message.successMessage(sysAccountMapper.selectByExample(example));
         } catch (Exception e) {

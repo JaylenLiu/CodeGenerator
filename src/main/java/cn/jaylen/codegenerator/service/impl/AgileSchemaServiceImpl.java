@@ -13,24 +13,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class AgileSchemaServiceImpl extends BaseServiceImpl<AgileSchema> implements AgileSchemaService {
-    @Autowired
+    @Resource
     AgileSchemaMapper agileSchemaMapper;
 
-    @Autowired
+    @Resource
     AgileEntityMapper entityMapper;
 
-    @Autowired
+    @Resource
     AgileComponentMapper componentMapper;
 
     @Override
     public List<AgileSchema> selectAll(){
         AgileSchemaExample example = new AgileSchemaExample();
-        example.createCriteria().andIdIsNotNull();
         return agileSchemaMapper.selectByExample(example);
     }
 

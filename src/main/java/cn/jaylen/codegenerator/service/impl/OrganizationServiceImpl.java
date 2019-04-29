@@ -33,7 +33,6 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     public Message getOrganizationTree() {
         SysOrganizationExample example = new SysOrganizationExample();
-        example.createCriteria().andIdIsNotNull();
         example.setOrderByClause("sort");
         try {
             List<SysOrganization> orgs = sysOrganizationMapper.selectByExample(example);

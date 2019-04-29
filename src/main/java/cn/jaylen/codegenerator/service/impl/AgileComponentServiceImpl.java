@@ -19,7 +19,6 @@ public class AgileComponentServiceImpl extends BaseServiceImpl<AgileComponent> i
     @Override
     public List<AgileComponent> selectAll(){
     AgileComponentExample example = new AgileComponentExample();
-        example.createCriteria().andIdIsNotNull();
         return agileComponentMapper.selectByExample(example);
     }
 

@@ -46,7 +46,7 @@ public class SysNoticeServiceImpl extends BaseServiceImpl<SysNotice> implements 
     }
 
     @Override
-    public int deleteByIDs(Integer[] ids){
+    public int deleteByIDs(Long[] ids){
         SysNoticeExample example = new SysNoticeExample();
         example.createCriteria().andIdIn(Arrays.asList(ids));
         return sysNoticeMapper.deleteByExample(example);

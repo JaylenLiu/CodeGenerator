@@ -47,7 +47,7 @@ public class SysNoticeController{
 
     @ApiOperation(value = "删除多个", notes = "删除多个")
     @DeleteMapping("/sysNotices")
-    public Message deleteByIds(Integer[] ids){
+    public Message deleteByIds(Long[] ids){
         if (ids == null || ids.length == 0) {
             return Message.nullParamsMessage();
         } else {
