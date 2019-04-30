@@ -16,8 +16,8 @@ public class SysNotice extends BaseEntity{
     @JsonFormat(timezone = "GMT+8", pattern = "YYYY-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
-    // 被通知者
-    private String notifier;
+    // 被通知者id
+    private Long notifier;
     // 1：未读，2：已读，3：删除
     private Integer state;
 

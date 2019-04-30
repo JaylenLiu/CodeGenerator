@@ -5,7 +5,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="notifier" jdbcType="VARCHAR" property="notifier" />
+    <result column="notifier" jdbcType="BIGINT" property="notifier" />
     <result column="state" jdbcType="INTEGER" property="state" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -103,7 +103,7 @@
     insert into sys_notice (id, content, create_time, 
       notifier, state)
     values (#{id,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{notifier,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER})
+      #{notifier,jdbcType=BIGINT}, #{state,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.jaylen.codegenerator.entity.SysNotice">
     insert into sys_notice
@@ -135,7 +135,7 @@
         #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="notifier != null">
-        #{notifier,jdbcType=VARCHAR},
+        #{notifier,jdbcType=BIGINT},
       </if>
       <if test="state != null">
         #{state,jdbcType=INTEGER},
@@ -161,7 +161,7 @@
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.notifier != null">
-        notifier = #{record.notifier,jdbcType=VARCHAR},
+        notifier = #{record.notifier,jdbcType=BIGINT},
       </if>
       <if test="record.state != null">
         state = #{record.state,jdbcType=INTEGER},
@@ -176,7 +176,7 @@
     set id = #{record.id,jdbcType=BIGINT},
       content = #{record.content,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      notifier = #{record.notifier,jdbcType=VARCHAR},
+      notifier = #{record.notifier,jdbcType=BIGINT},
       state = #{record.state,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -192,7 +192,7 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="notifier != null">
-        notifier = #{notifier,jdbcType=VARCHAR},
+        notifier = #{notifier,jdbcType=BIGINT},
       </if>
       <if test="state != null">
         state = #{state,jdbcType=INTEGER},
@@ -204,7 +204,7 @@
     update sys_notice
     set content = #{content,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      notifier = #{notifier,jdbcType=VARCHAR},
+      notifier = #{notifier,jdbcType=BIGINT},
       state = #{state,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>

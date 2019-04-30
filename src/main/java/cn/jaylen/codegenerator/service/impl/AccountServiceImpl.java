@@ -83,7 +83,6 @@ public class AccountServiceImpl implements AccountService {
             // 设置session 时长,单位为秒，30分钟过期
             session.setMaxInactiveInterval(30 * 60);
 
-
             // 获取用户信息
             SysUser user = sysUserMapper.selectByPrimaryKey(list.get(0).getUserId());
             SysOrganization organization = organizationMapper.selectByPrimaryKey(user.getOrgId());

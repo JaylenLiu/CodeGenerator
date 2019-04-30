@@ -305,62 +305,52 @@ public class SysNoticeExample {
             return (Criteria) this;
         }
 
-        public Criteria andNotifierEqualTo(String value) {
+        public Criteria andNotifierEqualTo(Long value) {
             addCriterion("notifier =", value, "notifier");
             return (Criteria) this;
         }
 
-        public Criteria andNotifierNotEqualTo(String value) {
+        public Criteria andNotifierNotEqualTo(Long value) {
             addCriterion("notifier <>", value, "notifier");
             return (Criteria) this;
         }
 
-        public Criteria andNotifierGreaterThan(String value) {
+        public Criteria andNotifierGreaterThan(Long value) {
             addCriterion("notifier >", value, "notifier");
             return (Criteria) this;
         }
 
-        public Criteria andNotifierGreaterThanOrEqualTo(String value) {
+        public Criteria andNotifierGreaterThanOrEqualTo(Long value) {
             addCriterion("notifier >=", value, "notifier");
             return (Criteria) this;
         }
 
-        public Criteria andNotifierLessThan(String value) {
+        public Criteria andNotifierLessThan(Long value) {
             addCriterion("notifier <", value, "notifier");
             return (Criteria) this;
         }
 
-        public Criteria andNotifierLessThanOrEqualTo(String value) {
+        public Criteria andNotifierLessThanOrEqualTo(Long value) {
             addCriterion("notifier <=", value, "notifier");
             return (Criteria) this;
         }
 
-        public Criteria andNotifierLike(String value) {
-            addCriterion("notifier like", value, "notifier");
-            return (Criteria) this;
-        }
-
-        public Criteria andNotifierNotLike(String value) {
-            addCriterion("notifier not like", value, "notifier");
-            return (Criteria) this;
-        }
-
-        public Criteria andNotifierIn(List<String> values) {
+        public Criteria andNotifierIn(List<Long> values) {
             addCriterion("notifier in", values, "notifier");
             return (Criteria) this;
         }
 
-        public Criteria andNotifierNotIn(List<String> values) {
+        public Criteria andNotifierNotIn(List<Long> values) {
             addCriterion("notifier not in", values, "notifier");
             return (Criteria) this;
         }
 
-        public Criteria andNotifierBetween(String value1, String value2) {
+        public Criteria andNotifierBetween(Long value1, Long value2) {
             addCriterion("notifier between", value1, value2, "notifier");
             return (Criteria) this;
         }
 
-        public Criteria andNotifierNotBetween(String value1, String value2) {
+        public Criteria andNotifierNotBetween(Long value1, Long value2) {
             addCriterion("notifier not between", value1, value2, "notifier");
             return (Criteria) this;
         }

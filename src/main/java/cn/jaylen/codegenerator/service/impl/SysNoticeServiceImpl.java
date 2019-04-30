@@ -6,6 +6,8 @@ import cn.jaylen.codegenerator.common.Message;
 import cn.jaylen.codegenerator.entity.example.SysNoticeExample;
 import cn.jaylen.codegenerator.service.SysNoticeService;
 import javax.annotation.Resource;
+
+import cn.jaylen.codegenerator.util.SpringContextUtil;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,5 +52,40 @@ public class SysNoticeServiceImpl extends BaseServiceImpl<SysNotice> implements 
         SysNoticeExample example = new SysNoticeExample();
         example.createCriteria().andIdIn(Arrays.asList(ids));
         return sysNoticeMapper.deleteByExample(example);
+    }
+
+    @Override
+    public Message changeState(Long id, Integer state) {
+        SysNotice sysNotice = sysNoticeMapper.selectByPrimaryKey(id);
+        sysNotice.setState(state);
+        return Message.successMessage(sysNoticeMapper.updateByPrimaryKeySelective(sysNotice));
+    }
+
+    @Override
+    public Message readAllNotice() {
+        SysNoticeExample example = new SysNoticeExample();
+        example.createCriteria().andNotifierEqualTo((Long) SpringContextUtil.getSession().getAttribute("accountId")).andStateEqualTo(1);
+        List<SysNotice> notices = sysNoticeMapper.selectByExample(example);
+
+        notices.forEach(sysNotice -> {
+            sysNotice.setState(2);
+            sysNoticeMapper.updateByPrimaryKeySelective(sysNotice);
+        });
+
+        return Message.successMessage(1);
+    }
+
+    @Override
+    public Message deleteAllNotice() {
+        SysNoticeExample example = new SysNoticeExample();
+        example.createCriteria().andNotifierEqualTo((Long) SpringContextUtil.getSession().getAttribute("accountId")).andStateEqualTo(2);
+        List<SysNotice> notices = sysNoticeMapper.selectByExample(example);
+
+        notices.forEach(sysNotice -> {
+            sysNotice.setState(3);
+            sysNoticeMapper.updateByPrimaryKeySelective(sysNotice);
+        });
+
+        return Message.successMessage(1);
     }
 }

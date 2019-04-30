@@ -102,9 +102,9 @@ public class CodeGenerator {
             String className;
             for (int i = 0; i < tables.length; i++) {
                 className = StringUtils.toUpperCaseFirstOne(StringUtils.lineToHump(tables[i]));
-                generatorUtil.generateService(className);
-                generatorUtil.generateServiceImpl(className);
-                generatorUtil.generateController(className);
+                generatorUtil.generateService(className, "Long");
+                generatorUtil.generateServiceImpl(className, "Long");
+                generatorUtil.generateController(className, "Long");
                 generatorUtil.generateEntity(getColumn(tables[i]), className, packagePath);
             }
         } catch (Exception e) {
