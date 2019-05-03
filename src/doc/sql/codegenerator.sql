@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : localhost
 Source Server Version : 50721
 Source Host           : localhost:3306
-Source Database       : qwe
+Source Database       : codegenerator
 
 Target Server Type    : MYSQL
 Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2019-03-01 09:40:11
+Date: 2019-05-03 17:11:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,11 +35,21 @@ CREATE TABLE `agile_component` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=150 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of agile_component
 -- ----------------------------
+INSERT INTO `agile_component` VALUES ('140', '15', null, 'id', '主键', null, 'input', '主键', '\0', '\0', '\0', '\0', '2019-04-29 14:08:42', null);
+INSERT INTO `agile_component` VALUES ('141', '15', null, 'content', '内容', null, 'input', '内容', '\0', '', '\0', '\0', '2019-04-29 14:08:42', null);
+INSERT INTO `agile_component` VALUES ('142', '15', null, 'createTime', '通知创建时间', null, 'dateTimePicker', '通知创建时间', '\0', '', '\0', '\0', '2019-04-29 14:08:42', null);
+INSERT INTO `agile_component` VALUES ('143', '15', null, 'notifier', '被通知者', null, 'input', '被通知者', '\0', '', '\0', '\0', '2019-04-29 14:08:42', null);
+INSERT INTO `agile_component` VALUES ('144', '15', null, 'state', '1：未读，2：已读，3：删除', null, 'input', '1：未读，2：已读，3：删除', '\0', '', '\0', '\0', '2019-04-29 14:08:42', null);
+INSERT INTO `agile_component` VALUES ('145', '16', null, 'id', '主键', null, 'input', '主键', '\0', '\0', '\0', '\0', '2019-04-29 14:28:40', null);
+INSERT INTO `agile_component` VALUES ('146', '16', null, 'content', '内容', null, 'input', '内容', '\0', '', '\0', '\0', '2019-04-29 14:28:40', null);
+INSERT INTO `agile_component` VALUES ('147', '16', null, 'createTime', '通知创建时间', null, 'dateTimePicker', '通知创建时间', '\0', '', '\0', '\0', '2019-04-29 14:28:40', null);
+INSERT INTO `agile_component` VALUES ('148', '16', null, 'notifier', '被通知者id', null, 'input', '被通知者id', '\0', '', '\0', '\0', '2019-04-29 14:28:40', null);
+INSERT INTO `agile_component` VALUES ('149', '16', null, 'state', '1：未读，2：已读，3：删除', null, 'input', '1：未读，2：已读，3：删除', '\0', '', '\0', '\0', '2019-04-29 14:28:40', null);
 
 -- ----------------------------
 -- Table structure for agile_entity
@@ -60,11 +70,13 @@ CREATE TABLE `agile_entity` (
   `update_time` datetime DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of agile_entity
 -- ----------------------------
+INSERT INTO `agile_entity` VALUES ('15', '12', '3', 'codegenerator', null, '1', 'SysNotice', 'sys_notice', null, null, '2019-04-29 14:08:42', null, null);
+INSERT INTO `agile_entity` VALUES ('16', '13', '3', 'codegenerator', null, '1', 'SysNotice', 'sys_notice', null, null, '2019-04-29 14:28:40', null, null);
 
 -- ----------------------------
 -- Table structure for agile_schema
@@ -80,11 +92,13 @@ CREATE TABLE `agile_schema` (
   `update_time` datetime DEFAULT NULL COMMENT '最近更新时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of agile_schema
 -- ----------------------------
+INSERT INTO `agile_schema` VALUES ('12', '123', '123', '123', 'cn.jaylen.codegenerator', '2019-04-29 14:08:32', null, null);
+INSERT INTO `agile_schema` VALUES ('13', '系统通知', '123', '123', 'cn.jaylen.codegenerator', '2019-04-29 14:28:31', null, null);
 
 -- ----------------------------
 -- Table structure for database_connection
@@ -102,11 +116,13 @@ CREATE TABLE `database_connection` (
   `update_time` datetime DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of database_connection
 -- ----------------------------
+INSERT INTO `database_connection` VALUES ('3', 'localhost', '1', '127.0.0.1', '3306', 'root', '123456', '2019-03-01 09:34:24', '2019-03-01 09:34:26', '');
+INSERT INTO `database_connection` VALUES ('4', '电子巡检', '1', '10.200.132.165', '3306', 'root', 'Pioneer@2017', '2019-03-01 09:34:29', '2019-03-01 09:34:32', '');
 
 -- ----------------------------
 -- Table structure for log
@@ -121,66 +137,11 @@ CREATE TABLE `log` (
   `create_time` datetime DEFAULT NULL,
   `remark` text CHARACTER SET utf8,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of log
 -- ----------------------------
-INSERT INTO `log` VALUES ('1', 'test', 'Message cn.pioneer.pws.service.impl.ProjectServiceImpl.saveProject(Project)', 'insert', 'params:cn.pioneer.pws.entity.Project@32bddbf7;result:Message{message=\'success\', ret=200, data={id=1}, pages=0}', '2018-08-30 15:02:38', null);
-INSERT INTO `log` VALUES ('2', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"interestRate\":0.6,\"proId\":1,\"costType\":6,\"D_2018_3\":-1260.0,\"D_2018_2\":-360.0,\"D_2018_1\":-180.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-30 15:02:56', null);
-INSERT INTO `log` VALUES ('3', 'test', 'Message cn.pioneer.pws.service.impl.CashFlowServiceImpl.saveCashFlow(Map)', 'insert', 'params:{itemName=123, itemContent=123, amount=3000, itemType=1, proId=1, D_2018_3=70, D_2018_2=20, D_2018_1=10};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-30 15:02:56', null);
-INSERT INTO `log` VALUES ('4', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.updatePlanCost(String)', 'update', 'params:{\"interestRate\":0.6,\"proId\":1,\"costType\":6,\"D_2018_3\":-360.0,\"id\":1,\"D_2018_2\":0.0,\"D_2018_1\":360.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-30 15:03:09', null);
-INSERT INTO `log` VALUES ('5', 'test', 'Message cn.pioneer.pws.service.impl.CashFlowServiceImpl.saveCashFlow(Map)', 'insert', 'params:{itemName=456, itemContent=45, amount=3000, itemType=2, proId=1, D_2018_3=50, D_2018_2=20, D_2018_1=30};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-30 15:03:09', null);
-INSERT INTO `log` VALUES ('6', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.updatePadCost(PlanCost)', 'update', 'params:cn.pioneer.pws.entity.PlanCost@15577be0;result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-30 15:13:20', null);
-INSERT INTO `log` VALUES ('7', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.updatePlanCost(String)', 'update', 'params:{\"interestRate\":0.6,\"proId\":1,\"costType\":6,\"D_2018_3\":360.0,\"id\":1,\"D_2018_2\":0.0,\"D_2018_1\":180.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-30 15:13:50', null);
-INSERT INTO `log` VALUES ('8', 'test', 'Message cn.pioneer.pws.service.impl.CashFlowServiceImpl.updateCashFlow(Map)', 'update', 'params:{itemName=123, itemContent=123, itemType=1, amount=3000, proId=1, D_2018_3=30, id=1, D_2018_2=20, D_2018_1=20};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-30 15:13:50', null);
-INSERT INTO `log` VALUES ('9', 'test', 'Message cn.pioneer.pws.service.impl.ProfitServiceImpl.updateProfit(Profit)', 'update', 'params:Profit{id=1, proId=1, serviceItem=\'213\', productLine=\'数据中心规划与设计服务\', revenueRecMethod=\'null\', quotationAmount=1000, taxRate=12.0, deductionAmount=892.86, costExcludeTax=540, riskRatio=5.0, riskAmount=27.00, grossProfit=325.86, grossMargin=36.5, deductibleVatCost=null, businessSurtax=null, adjustedGrossProfit=null, adjustedGrossMargin=null, createTime=Thu Aug 30 15:13:20 CST 2018, updateTime=Thu Aug 30 15:14:34 CST 2018, remark=\'null\'};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-30 15:14:34', null);
-INSERT INTO `log` VALUES ('10', '管理员', 'Message cn.pioneer.pws.service.impl.AccountServiceImpl.updatePassword(Long[])', 'update', 'params:[Ljava.lang.Long;@65c15051;result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-30 16:11:40', null);
-INSERT INTO `log` VALUES ('11', '管理员', 'Message cn.pioneer.pws.service.impl.AccountServiceImpl.updatePassword(Long[])', 'update', 'params:[Ljava.lang.Long;@28271956;result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-30 16:14:04', null);
-INSERT INTO `log` VALUES ('12', '管理员', 'Message cn.pioneer.pws.service.impl.AccountServiceImpl.updatePassword(Long[])', 'update', 'params:[Ljava.lang.Long;@4cfe5a30;result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-30 16:16:12', null);
-INSERT INTO `log` VALUES ('13', '管理员', 'Message cn.pioneer.pws.service.impl.AccountServiceImpl.updatePassword(Long[])', 'update', 'params:[Ljava.lang.Long;@22384945;result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 09:14:41', null);
-INSERT INTO `log` VALUES ('14', '管理员', 'Message cn.pioneer.pws.service.impl.AccountServiceImpl.updatePassword(Long[])', 'update', 'params:[Ljava.lang.Long;@416082a2;result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 09:20:29', null);
-INSERT INTO `log` VALUES ('15', '管理员', 'Message cn.pioneer.pws.service.impl.AccountServiceImpl.updatePassword(Long[])', 'update', 'params:[Ljava.lang.Long;@4ff61ca;result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 09:23:07', null);
-INSERT INTO `log` VALUES ('16', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"企业应用服务\",\"serviceItem\":\"excelTest\",\"costType\":1,\"proId\":1,\"D_2018_3\":3.0,\"remark\":\"\",\"staffLevel\":\"\",\"D_2018_2\":2.0,\"D_2018_1\":1.0};result:Message{message=\'该人员级别不存在！\', ret=500, data=null, pages=0}', '2018-08-31 10:18:07', null);
-INSERT INTO `log` VALUES ('17', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"企业应用服务\",\"serviceItem\":\"excelTest\",\"supplier\":\"盘古服务公司\",\"costType\":3,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'该产品线不存在！\', ret=500, data=null, pages=0}', '2018-08-31 10:18:09', null);
-INSERT INTO `log` VALUES ('18', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"企业应用服务\",\"serviceItem\":\"excelTest\",\"supplier\":\"盘古服务公司\",\"costType\":4,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'该产品线不存在！\', ret=500, data=null, pages=0}', '2018-08-31 10:20:14', null);
-INSERT INTO `log` VALUES ('19', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"企业应用服务\",\"serviceItem\":\"excelTest\",\"decription\":\"\",\"costType\":5,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'该产品线不存在！\', ret=500, data=null, pages=0}', '2018-08-31 10:20:16', null);
-INSERT INTO `log` VALUES ('20', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"企业应用服务\",\"serviceItem\":\"excelTest\",\"decription\":\"\",\"costType\":7,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'该产品线不存在！\', ret=500, data=null, pages=0}', '2018-08-31 10:20:18', null);
-INSERT INTO `log` VALUES ('21', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"costType\":1,\"proId\":1,\"D_2018_3\":3.0,\"remark\":\"\",\"staffLevel\":\"工程部-高级项目经理\",\"D_2018_2\":2.0,\"D_2018_1\":1.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:22:12', null);
-INSERT INTO `log` VALUES ('22', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"supplier\":\"盘古服务公司\",\"costType\":3,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:22:14', null);
-INSERT INTO `log` VALUES ('23', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"supplier\":\"盘古服务公司\",\"costType\":4,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:22:16', null);
-INSERT INTO `log` VALUES ('24', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"decription\":\"\",\"costType\":5,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:22:17', null);
-INSERT INTO `log` VALUES ('25', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"decription\":\"\",\"costType\":7,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:22:18', null);
-INSERT INTO `log` VALUES ('26', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"costType\":1,\"proId\":1,\"D_2018_3\":3.0,\"remark\":\"\",\"staffLevel\":\"工程部-高级项目经理\",\"D_2018_2\":2.0,\"D_2018_1\":1.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:23:44', null);
-INSERT INTO `log` VALUES ('27', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"supplier\":\"盘古服务公司\",\"costType\":3,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:23:45', null);
-INSERT INTO `log` VALUES ('28', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"supplier\":\"盘古服务公司\",\"costType\":4,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:23:45', null);
-INSERT INTO `log` VALUES ('29', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"decription\":\"\",\"costType\":5,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:23:46', null);
-INSERT INTO `log` VALUES ('30', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"decription\":\"\",\"costType\":7,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:23:46', null);
-INSERT INTO `log` VALUES ('31', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"costType\":1,\"proId\":1,\"D_2018_3\":3.0,\"remark\":\"\",\"staffLevel\":\"工程部-高级项目经理\",\"D_2018_2\":2.0,\"D_2018_1\":1.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:38:15', null);
-INSERT INTO `log` VALUES ('32', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"supplier\":\"盘古服务公司\",\"costType\":3,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:38:15', null);
-INSERT INTO `log` VALUES ('33', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"supplier\":\"盘古服务公司\",\"costType\":4,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:38:15', null);
-INSERT INTO `log` VALUES ('34', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"decription\":\"\",\"costType\":5,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:38:15', null);
-INSERT INTO `log` VALUES ('35', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"decription\":\"\",\"costType\":7,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:38:15', null);
-INSERT INTO `log` VALUES ('36', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务1\",\"serviceItem\":\"excelTest\",\"costType\":1,\"proId\":1,\"D_2018_3\":3.0,\"remark\":\"\",\"staffLevel\":\"工程部-高级项目经理\",\"D_2018_2\":2.0,\"D_2018_1\":1.0};result:Message{message=\'该产品线不存在！\', ret=500, data=null, pages=0}', '2018-08-31 10:38:34', null);
-INSERT INTO `log` VALUES ('37', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"costType\":1,\"proId\":1,\"D_2018_3\":3.0,\"remark\":\"\",\"staffLevel\":\"工程部-高级项目经理\",\"D_2018_2\":2.0,\"D_2018_1\":1.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:41:17', null);
-INSERT INTO `log` VALUES ('38', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"supplier\":\"盘古服务公司\",\"costType\":3,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:41:17', null);
-INSERT INTO `log` VALUES ('39', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"supplier\":\"盘古服务公司\",\"costType\":4,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:41:17', null);
-INSERT INTO `log` VALUES ('40', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"decription\":\"\",\"costType\":5,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:41:17', null);
-INSERT INTO `log` VALUES ('41', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务2\",\"serviceItem\":\"excelTest\",\"decription\":\"\",\"costType\":7,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'该产品线不存在！\', ret=500, data=null, pages=0}', '2018-08-31 10:41:17', null);
-INSERT INTO `log` VALUES ('42', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"costType\":1,\"proId\":1,\"D_2018_3\":3.0,\"remark\":\"\",\"staffLevel\":\"工程部-高级项目经理\",\"D_2018_2\":2.0,\"D_2018_1\":1.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:44:19', null);
-INSERT INTO `log` VALUES ('43', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"supplier\":\"盘古服务公司\",\"costType\":3,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:44:19', null);
-INSERT INTO `log` VALUES ('44', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"supplier\":\"盘古服务公司\",\"costType\":4,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:44:19', null);
-INSERT INTO `log` VALUES ('45', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"decription\":\"\",\"costType\":5,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:44:19', null);
-INSERT INTO `log` VALUES ('46', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务2\",\"serviceItem\":\"excelTest\",\"decription\":\"\",\"costType\":7,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'该产品线不存在！\', ret=500, data=null, pages=0}', '2018-08-31 10:44:19', null);
-INSERT INTO `log` VALUES ('47', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"costType\":1,\"proId\":1,\"D_2018_3\":3.0,\"remark\":\"\",\"staffLevel\":\"工程部-高级项目经理\",\"D_2018_2\":2.0,\"D_2018_1\":1.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:45:29', null);
-INSERT INTO `log` VALUES ('48', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"supplier\":\"盘古服务公司\",\"costType\":3,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:45:29', null);
-INSERT INTO `log` VALUES ('49', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"supplier\":\"盘古服务公司\",\"costType\":4,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:45:29', null);
-INSERT INTO `log` VALUES ('50', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务\",\"serviceItem\":\"excelTest\",\"decription\":\"\",\"costType\":5,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:45:29', null);
-INSERT INTO `log` VALUES ('51', 'test', 'Message cn.pioneer.pws.service.impl.PlanCostServiceImpl.savePlanCost(String)', 'insert', 'params:{\"productLine\":\"河北惠华项目系统集成服务2\",\"serviceItem\":\"excelTest\",\"decription\":\"\",\"costType\":7,\"proId\":1,\"D_2018_3\":300.0,\"remark\":\"\",\"D_2018_2\":200.0,\"D_2018_1\":100.0};result:Message{message=\'该产品线不存在！\', ret=500, data=null, pages=0}', '2018-08-31 10:45:29', null);
-INSERT INTO `log` VALUES ('52', 'test', 'Message cn.pioneer.pws.service.impl.ProfitServiceImpl.updateProfit(Profit)', 'update', 'params:Profit{id=2, proId=1, serviceItem=\'excelTest\', productLine=\'河北惠华项目系统集成服务\', revenueRecMethod=\'null\', quotationAmount=100000, taxRate=4.0, deductionAmount=96153.85, costExcludeTax=97560, riskRatio=5.0, riskAmount=4878.00, grossProfit=-6284.15, grossMargin=-6.54, deductibleVatCost=null, businessSurtax=null, adjustedGrossProfit=null, adjustedGrossMargin=null, createTime=Fri Aug 31 10:22:11 CST 2018, updateTime=Fri Aug 31 10:46:40 CST 2018, remark=\'null\'};result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 10:46:40', null);
-INSERT INTO `log` VALUES ('53', '管理员', 'Message cn.pioneer.pws.service.impl.RoleServiceImpl.saveRole(SysRole)', 'insert', 'params:cn.pioneer.pws.entity.SysRole@74eba629;result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 11:02:29', null);
-INSERT INTO `log` VALUES ('54', '管理员', 'Message cn.pioneer.pws.service.impl.AccountServiceImpl.updatePassword(Long[])', 'update', 'params:[Ljava.lang.Long;@61f5de8e;result:Message{message=\'success\', ret=200, data=1, pages=0}', '2018-08-31 11:51:39', null);
-INSERT INTO `log` VALUES ('55', null, 'Message cn.pioneer.codegenerator.service.impl.TestServiceImpl.saveTest(Test)', 'insert', 'params:cn.pioneer.codegenerator.entity.Test@1237d7b2;result:Message{message=\'success\', status=200, data=null, pages=0}', '2018-09-11 17:24:51', null);
 
 -- ----------------------------
 -- Table structure for sys_account
@@ -201,14 +162,14 @@ CREATE TABLE `sys_account` (
   `update_time` datetime DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of sys_account
 -- ----------------------------
-INSERT INTO `sys_account` VALUES ('1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '2', '0', '2019-02-28 14:06:17', '127.0.0.1', 'ljl', '2018-07-12 09:29:44', '管理员', '2018-07-12 14:46:45', null);
-INSERT INTO `sys_account` VALUES ('7', '1', 'test', 'e10adc3949ba59abbe56e057f20f883e', '2', '0', '2018-08-31 11:52:22', '127.0.0.1', '管理员', '2018-08-27 14:39:11', '管理员', '2018-08-30 16:16:12', null);
+INSERT INTO `sys_account` VALUES ('1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '2', '0', '2019-04-30 09:45:38', '127.0.0.1', 'ljl', '2018-07-12 09:29:44', '管理员', '2018-07-12 14:46:45', null);
 INSERT INTO `sys_account` VALUES ('8', '2', 'visitor', 'e10adc3949ba59abbe56e057f20f883e', '2', '0', '2018-08-31 12:05:02', '127.0.0.1', '管理员', '2018-08-31 11:03:33', null, null, null);
+INSERT INTO `sys_account` VALUES ('9', '3', '123', 'e10adc3949ba59abbe56e057f20f883e', '2', '0', null, null, null, '2019-03-01 11:56:47', null, '2019-03-01 11:56:58', null);
 
 -- ----------------------------
 -- Table structure for sys_account_role
@@ -219,15 +180,14 @@ CREATE TABLE `sys_account_role` (
   `account_id` bigint(20) DEFAULT NULL,
   `role_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of sys_account_role
 -- ----------------------------
 INSERT INTO `sys_account_role` VALUES ('1', '1', '1');
-INSERT INTO `sys_account_role` VALUES ('15', '7', '2');
 INSERT INTO `sys_account_role` VALUES ('16', '8', '3');
-INSERT INTO `sys_account_role` VALUES ('17', '7', '1');
+INSERT INTO `sys_account_role` VALUES ('18', '9', null);
 
 -- ----------------------------
 -- Table structure for sys_department
@@ -307,6 +267,24 @@ INSERT INTO `sys_keyvalue` VALUES ('21', '3', '河北惠华北京分公司', nul
 INSERT INTO `sys_keyvalue` VALUES ('22', '3', '云星网络传输（深圳）有限公司', null, '2018-08-21 16:44:39', null);
 
 -- ----------------------------
+-- Table structure for sys_notice
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_notice`;
+CREATE TABLE `sys_notice` (
+  `id` bigint(20) NOT NULL COMMENT '主键',
+  `content` varchar(255) DEFAULT NULL COMMENT '内容',
+  `create_time` datetime DEFAULT NULL COMMENT '通知创建时间',
+  `notifier` bigint(20) DEFAULT NULL COMMENT '被通知者id',
+  `state` int(11) DEFAULT NULL COMMENT '1：未读，2：已读，3：删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of sys_notice
+-- ----------------------------
+INSERT INTO `sys_notice` VALUES ('1', '123', '2019-04-30 09:46:03', '1', '3');
+
+-- ----------------------------
 -- Table structure for sys_organization
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_organization`;
@@ -325,12 +303,12 @@ CREATE TABLE `sys_organization` (
 -- ----------------------------
 -- Records of sys_organization
 -- ----------------------------
-INSERT INTO `sys_organization` VALUES ('1', '-1', 'xx集团', '1', '1', null, '2018-07-12 09:43:30', '2019-03-01 09:35:32');
-INSERT INTO `sys_organization` VALUES ('2', '1', '深圳市xxx投资管理有限公司（母公司）', '1', '1', null, '2018-07-12 10:56:43', '2019-03-01 09:35:36');
-INSERT INTO `sys_organization` VALUES ('3', '1', '深圳市xx服务有限公司', '1', '2', null, '2018-08-23 12:01:48', '2019-03-01 09:35:40');
-INSERT INTO `sys_organization` VALUES ('4', '1', '深圳市xxx有限公司', '1', '3', null, '2018-08-23 13:38:38', '2019-03-01 09:35:44');
-INSERT INTO `sys_organization` VALUES ('5', '1', 'abc传输（深圳）有限公司', '1', '4', null, '2018-08-23 13:39:06', '2019-03-01 09:35:49');
-INSERT INTO `sys_organization` VALUES ('6', '1', 'sdf深圳）有限公司', '1', '5', null, '2018-08-23 13:39:31', '2019-03-01 09:35:56');
+INSERT INTO `sys_organization` VALUES ('1', '-1', '盘古天地总公司', '1', '1', null, '2018-07-12 09:43:30', '2019-03-01 09:30:12');
+INSERT INTO `sys_organization` VALUES ('2', '1', '深圳市盘古天地投资管理有限公司（母公司）', '1', '1', null, '2018-07-12 10:56:43', '2019-03-01 09:30:06');
+INSERT INTO `sys_organization` VALUES ('3', '1', '深圳市盘古运营服务有限公司', '1', '2', null, '2018-08-23 12:01:48', '2018-08-23 13:40:55');
+INSERT INTO `sys_organization` VALUES ('4', '1', '深圳市盘古数据有限公司', '1', '3', null, '2018-08-23 13:38:38', '2018-08-23 13:40:56');
+INSERT INTO `sys_organization` VALUES ('5', '1', '云星网络传输（深圳）有限公司', '1', '4', null, '2018-08-23 13:39:06', '2018-08-23 13:40:58');
+INSERT INTO `sys_organization` VALUES ('6', '1', '云星数据（深圳）有限公司', '1', '5', null, '2018-08-23 13:39:31', '2018-08-23 13:41:00');
 INSERT INTO `sys_organization` VALUES ('7', '3', 'IT部', '2', '1', null, '2018-08-23 13:40:20', '2018-08-23 13:41:08');
 
 -- ----------------------------
@@ -354,18 +332,18 @@ CREATE TABLE `sys_resource` (
 -- ----------------------------
 -- Records of sys_resource
 -- ----------------------------
-INSERT INTO `sys_resource` VALUES ('1', '-1', '项目管理', 'project', null, 'el-icon-menu', '2018-07-12 14:59:35', '2018-07-19 15:27:26', '2', null);
-INSERT INTO `sys_resource` VALUES ('2', '-1', '基础管理', 'null', null, 'el-icon-menu', '2018-07-12 15:16:34', null, '2', null);
-INSERT INTO `sys_resource` VALUES ('3', '2', '账户管理', 'account', null, 'el-icon-menu', '2018-07-12 15:16:57', '2018-07-12 19:57:02', '1', null);
-INSERT INTO `sys_resource` VALUES ('4', '2', '角色管理', 'role', null, 'el-icon-menu', '2018-07-12 15:17:20', '2018-07-12 19:57:16', '2', null);
-INSERT INTO `sys_resource` VALUES ('5', '2', '组织管理', 'organization', null, 'el-icon-menu', '2018-07-12 15:17:59', '2018-07-12 19:57:27', '6', null);
-INSERT INTO `sys_resource` VALUES ('6', '2', '资源管理', 'resource', null, 'el-icon-menu', '2018-07-12 15:18:17', '2018-07-12 19:57:41', '4', null);
-INSERT INTO `sys_resource` VALUES ('7', '2', '资源分配', 'resAssignment', null, 'el-icon-menu', '2018-07-12 15:18:44', '2018-07-12 19:57:51', '5', null);
-INSERT INTO `sys_resource` VALUES ('8', '2', '角色分配', 'roleAssignment', null, 'el-icon-menu', '2018-07-12 15:19:15', '2018-07-12 20:00:12', '3', null);
-INSERT INTO `sys_resource` VALUES ('9', '-1', '主页', 'home', null, 'el-icon-menu', '2018-07-12 17:41:00', '2018-07-19 15:26:52', '1', null);
-INSERT INTO `sys_resource` VALUES ('11', '-1', '月利息点', 'interestRate', null, 'el-icon-menu', '2018-07-19 11:10:03', null, '6', null);
-INSERT INTO `sys_resource` VALUES ('12', '-1', '人员级别配置', 'staffLevelConf', null, 'el-icon-menu', '2018-07-19 15:26:21', '2018-07-19 16:01:15', '5', null);
-INSERT INTO `sys_resource` VALUES ('15', '2', '字典管理', 'key', null, 'el-icon-menu', '2018-08-08 17:32:54', null, '7', null);
+INSERT INTO `sys_resource` VALUES ('1', '-1', '项目管理', 'project', '../container/project/project.vue', 'el-icon-menu', '2018-07-12 14:59:35', '2018-07-19 15:27:26', '2', null);
+INSERT INTO `sys_resource` VALUES ('2', '-1', '基础管理', 'null', 'null', 'el-icon-menu', '2018-07-12 15:16:34', null, '2', null);
+INSERT INTO `sys_resource` VALUES ('3', '2', '账户管理', 'account', '../container/account/account.vue', 'el-icon-menu', '2018-07-12 15:16:57', '2018-07-12 19:57:02', '1', null);
+INSERT INTO `sys_resource` VALUES ('4', '2', '角色管理', 'role', '../container/role/role.vue', 'el-icon-menu', '2018-07-12 15:17:20', '2018-07-12 19:57:16', '2', null);
+INSERT INTO `sys_resource` VALUES ('5', '2', '组织管理', 'organization', '../container/organization/organization.vue', 'el-icon-menu', '2018-07-12 15:17:59', '2018-07-12 19:57:27', '6', null);
+INSERT INTO `sys_resource` VALUES ('6', '2', '资源管理', 'resource', '../container/resource/resource.vue', 'el-icon-menu', '2018-07-12 15:18:17', '2018-07-12 19:57:41', '4', null);
+INSERT INTO `sys_resource` VALUES ('7', '2', '资源分配', 'resAssignment', '../container/resource/resAssignment.vue', 'el-icon-menu', '2018-07-12 15:18:44', '2018-07-12 19:57:51', '5', null);
+INSERT INTO `sys_resource` VALUES ('8', '2', '角色分配', 'roleAssignment', '../container/role/roleAssignment.vue', 'el-icon-menu', '2018-07-12 15:19:15', '2018-07-12 20:00:12', '3', null);
+INSERT INTO `sys_resource` VALUES ('9', '-1', '主页', 'home', '../components/page/Dashboard.vue', 'el-icon-menu', '2018-07-12 17:41:00', '2018-07-19 15:26:52', '1', null);
+INSERT INTO `sys_resource` VALUES ('11', '-1', '月利息点', 'interestRate', '../container/interestRate/interestRate.vue', 'el-icon-menu', '2018-07-19 11:10:03', null, '6', null);
+INSERT INTO `sys_resource` VALUES ('12', '-1', '人员级别配置', 'staffLevelConf', '../container/staffLevelConf/staffLevelConf.vue', 'el-icon-menu', '2018-07-19 15:26:21', '2018-07-19 16:01:15', '5', null);
+INSERT INTO `sys_resource` VALUES ('15', '2', '字典管理', 'key', '', 'el-icon-menu', '2018-08-08 17:32:54', null, '7', null);
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -431,11 +409,11 @@ CREATE TABLE `sys_user` (
   `update_time` datetime DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', '7', 'test', null, null, null, '2018-08-27 14:39:11', null, null);
+INSERT INTO `sys_user` VALUES ('1', '1', '管理员', null, null, null, null, null, null);
 INSERT INTO `sys_user` VALUES ('2', '3', '游客', null, null, null, '2018-08-31 11:03:33', null, null);
-
+INSERT INTO `sys_user` VALUES ('3', '1', '123', null, null, null, '2019-03-01 11:56:47', '2019-03-01 11:56:58', null);
