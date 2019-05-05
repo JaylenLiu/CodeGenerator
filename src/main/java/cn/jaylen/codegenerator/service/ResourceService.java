@@ -3,6 +3,7 @@ package cn.jaylen.codegenerator.service;
 
 import cn.jaylen.codegenerator.common.Message;
 import cn.jaylen.codegenerator.entity.SysResource;
+import cn.jaylen.codegenerator.entity.example.SysResourceExample;
 
 /**
  * @author ljl
@@ -11,11 +12,14 @@ import cn.jaylen.codegenerator.entity.SysResource;
  **/
 public interface ResourceService {
     Message getResources(String searchKey);
-    Message getAllResources();
+    Message getAllResources(SysResourceExample example);
     Message saveResource(SysResource resource);
     Message updateResource(SysResource resource);
     Message deleteResources(Long[] ids);
     Message getResByRoleId(Long roleId);
     Message getResTree();
 
+    Message getResTreeByRoleId(Long roleId);
+    Message unassignResTree(Long roleId);
+    Message assignRes(String mode, Long roleId, Long[] keys, Long[] harfKeys);
 }

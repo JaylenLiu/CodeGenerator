@@ -66,8 +66,7 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public Message getAllResources() {
-        SysResourceExample example = new SysResourceExample();
+    public Message getAllResources( SysResourceExample example) {
         try {
             return Message.successMessage(sysResourceMapper.selectByExample(example));
         } catch (Exception e) {
@@ -155,7 +154,7 @@ public class ResourceServiceImpl implements ResourceService {
         List<Map<String, Object>> res = new ArrayList<>();
         if (!CollectionUtils.isEmpty(list)) {
             for (SysResource resource : list) {
-                if ((pid == null &&  resource.getParentId() == -1) || resource.getParentId() == pid) {
+                if ((pid == null &&  resource.getParentId() == null) || resource.getParentId() == pid) {
                     Map<String, Object> temp = new HashMap<>();
                     List<Map<String, Object>> sublist = getTreeMap(list, resource.getId());
                     if (sublist != null && sublist.size() != 0) {
@@ -169,5 +168,133 @@ public class ResourceServiceImpl implements ResourceService {
             }
         }
         return res;
+    }
+
+    @Override
+    public Message getResTreeByRoleId(Long roleId) {
+        Message message = getResByRoleId(roleId);
+        if (message.getHttpCode() != 200) {
+            return message;
+        }
+        List<Long> resIds = (List<Long>) message.getData();
+        SysResourceExample example = new SysResourceExample();
+        example.createCriteria().andIdIn(resIds);
+        List<SysResource> resources = sysResourceMapper.selectByExample(example);
+        return Message.successMessage(getResTree(resources, null));
+    }
+
+    private List<Map<String,Object>> getResTree(List<SysResource> list, Long pid){
+        List<Map<String, Object>> res = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(list)) {
+            for (SysResource resource : list) {
+                if ((pid == null &&  resource.getParentId() == null) || resource.getParentId() == pid) {
+                    Map<String, Object> temp = new HashMap<>();
+                    List<Map<String,Object>> sublist = getResTree(list, resource.getId());
+                    if (sublist != null && sublist.size() != 0) {
+                        temp.put("children", sublist);
+                    }
+                    temp.put("id", resource.getId());
+                    temp.put("pid", resource.getParentId());
+                    temp.put("label", resource.getResName());
+                    res.add(temp);
+                }
+            }
+        }
+        return res;
+    }
+
+    @Override
+    public Message assignRes(String mode, Long roleId, Long[] keys, Long[] harfKeys) {
+        if (mode.equals("add")) {
+            if (harfKeys != null) {
+                assignParentMenu(roleId, harfKeys);
+            }
+            for (int i = 0; i < keys.length; i++) {
+                SysRoleRes roleRes = new SysRoleRes();
+                roleRes.setResId(keys[i]);
+                roleRes.setRoleId(roleId);
+                sysRoleResMapper.insertSelective(roleRes);
+            }
+        } else if (mode.equals("remove")){
+            SysRoleResExample roleResExample = new SysRoleResExample();
+            roleResExample.createCriteria().andRoleIdEqualTo(roleId).andResIdIn(Arrays.asList(keys));
+            sysRoleResMapper.deleteByExample(roleResExample);
+        }
+        return Message.successMessage(1);
+    }
+
+    /**
+     * 父目录分配
+     * @param roleId
+     * @param resIds
+     */
+    private void assignParentMenu(Long roleId, Long[] resIds){
+        for (int i = 0; i < resIds.length; i++) {
+            if (!isAssigned(roleId, resIds[i])){
+                SysRoleRes roleRes = new SysRoleRes();
+                roleRes.setResId(resIds[i]);
+                roleRes.setRoleId(roleId);
+                sysRoleResMapper.insertSelective(roleRes);
+            }
+        }
+    }
+
+    /**
+     * 验证资源是否已分配
+     * @param roleId
+     * @param resId
+     * @return
+     */
+    private boolean isAssigned(Long roleId, Long resId){
+        SysRoleResExample example = new SysRoleResExample();
+        example.createCriteria().andRoleIdEqualTo(roleId).andResIdEqualTo(resId);
+        List<SysRoleRes> roleRes = sysRoleResMapper.selectByExample(example);
+        return roleRes.size() > 0;
+    }
+
+    @Override
+    public Message unassignResTree(Long roleId) {
+        // 已分配id
+        Message message = getResByRoleId(roleId);
+        List<Long> resIds = new ArrayList<>();
+        if (message.getHttpCode() == 200) {
+            resIds = (List<Long>) message.getData();
+        }
+
+        // 一级目录
+        List<Long> parentIds = sysResourceMapper.getParentDirIds();
+
+        // 所有叶子节点
+        if (parentIds != null) {
+            resIds.removeAll(parentIds);
+        }
+
+        SysResourceExample example = new SysResourceExample();
+        if (resIds != null && resIds.size() != 0) {
+            example.createCriteria().andIdNotIn(resIds);
+        }
+        List<SysResource> resources = sysResourceMapper.selectByExample(example);
+        List<Map<String,Object>> result =  getResTree(resources, null);
+        for (int i = 0; i < result.size(); i++) {
+            if (pidIsExist(parentIds, (Long) result.get(i).get("id"))){
+                List<Map<String,Object>> temp = (List<Map<String, Object>>) result.get(i).get("children");
+                if (temp == null) {
+                    result.remove(i--);
+                }
+            }
+        }
+        return Message.successMessage(result);
+    }
+
+    private boolean pidIsExist(List<Long> parentIds, Long id){
+        if (parentIds == null) {
+            return false;
+        }
+        for (int i = 0; i < parentIds.size(); i++) {
+            if (parentIds.get(i) == id) {
+                return true;
+            }
+        }
+        return false;
     }
 }

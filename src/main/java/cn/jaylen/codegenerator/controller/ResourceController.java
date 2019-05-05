@@ -2,7 +2,9 @@ package cn.jaylen.codegenerator.controller;
 
 import cn.jaylen.codegenerator.common.Message;
 import cn.jaylen.codegenerator.entity.SysResource;
+import cn.jaylen.codegenerator.entity.example.SysResourceExample;
 import cn.jaylen.codegenerator.service.ResourceService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -34,7 +36,8 @@ public class ResourceController {
      */
     @GetMapping(value = "/allRes")
     public Message getAllResources(){
-        return service.getAllResources();
+        SysResourceExample example = new SysResourceExample();
+        return service.getAllResources(example);
     }
 
     /**
@@ -103,4 +106,47 @@ public class ResourceController {
     }
 
 
+    @ApiOperation(value = "获取资源父目录", notes = "获取资源父目录")
+    @GetMapping(value = "/sysResource/parentDir")
+    public Message getParentDir(){
+        SysResourceExample example = new SysResourceExample();
+        example.createCriteria().andParentIdIsNull();
+        return service.getAllResources(example);
+    }
+
+    /**
+     * 获取所有资源的树形结构,用于资源分配穿梭框
+     * @return
+     */
+    @GetMapping("/unassignResTree")
+    public Message unassignResTree(Long roleId){
+        return service.unassignResTree(roleId);
+    }
+
+    /**
+     * 通过roleId获取菜单树形结构，用于权限分配中的已分配菜单
+     * @param roleId
+     * @return
+     */
+    @GetMapping("/getResTreeByRoleId")
+    public Message getResTreeByRoleId(Long roleId){
+        if (roleId == null ){
+            return Message.nullParamsMessage();
+        } else {
+            return service.getResTreeByRoleId(roleId);
+        }
+    }
+
+    /**
+     * 权限分配
+     * @param mode ： add / remove
+     * @param roleId
+     * @param keys : 移动的id
+     * @param harfKeys : 父级id
+     * @return
+     */
+    @PostMapping("/assignRes")
+    public Message assignRes(String mode, Long roleId, Long[] keys, Long[] harfKeys){
+        return service.assignRes(mode, roleId, keys, harfKeys);
+    }
 }

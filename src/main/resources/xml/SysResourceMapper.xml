@@ -117,7 +117,7 @@
             account_id = #{accountId,jdbcType=BIGINT}
       )
     )
-    ORDER by sys_resource.sort
+    ORDER by parent_id,sys_resource.sort
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -313,4 +313,8 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="getParentDirIds"  resultType="java.lang.Long">
+    SELECT DISTINCT parent_id from sys_resource WHERE PARENT_ID is not null
+  </select>
 </mapper>

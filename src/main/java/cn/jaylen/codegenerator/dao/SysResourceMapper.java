@@ -33,4 +33,6 @@ public interface SysResourceMapper {
     int updateByPrimaryKeySelective(SysResource record);
 
     int updateByPrimaryKey(SysResource record);
+
+    List<Long> getParentDirIds();
 }
