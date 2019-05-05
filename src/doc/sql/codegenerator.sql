@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2019-05-03 17:11:34
+Date: 2019-05-05 10:28:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -122,7 +122,6 @@ CREATE TABLE `database_connection` (
 -- Records of database_connection
 -- ----------------------------
 INSERT INTO `database_connection` VALUES ('3', 'localhost', '1', '127.0.0.1', '3306', 'root', '123456', '2019-03-01 09:34:24', '2019-03-01 09:34:26', '');
-INSERT INTO `database_connection` VALUES ('4', '电子巡检', '1', '10.200.132.165', '3306', 'root', 'Pioneer@2017', '2019-03-01 09:34:29', '2019-03-01 09:34:32', '');
 
 -- ----------------------------
 -- Table structure for log
@@ -167,7 +166,7 @@ CREATE TABLE `sys_account` (
 -- ----------------------------
 -- Records of sys_account
 -- ----------------------------
-INSERT INTO `sys_account` VALUES ('1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '2', '0', '2019-04-30 09:45:38', '127.0.0.1', 'ljl', '2018-07-12 09:29:44', '管理员', '2018-07-12 14:46:45', null);
+INSERT INTO `sys_account` VALUES ('1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '2', '0', '2019-05-05 10:21:57', '127.0.0.1', 'ljl', '2018-07-12 09:29:44', '管理员', '2018-07-12 14:46:45', null);
 INSERT INTO `sys_account` VALUES ('8', '2', 'visitor', 'e10adc3949ba59abbe56e057f20f883e', '2', '0', '2018-08-31 12:05:02', '127.0.0.1', '管理员', '2018-08-31 11:03:33', null, null, null);
 INSERT INTO `sys_account` VALUES ('9', '3', '123', 'e10adc3949ba59abbe56e057f20f883e', '2', '0', null, null, null, '2019-03-01 11:56:47', null, '2019-03-01 11:56:58', null);
 
@@ -282,7 +281,7 @@ CREATE TABLE `sys_notice` (
 -- ----------------------------
 -- Records of sys_notice
 -- ----------------------------
-INSERT INTO `sys_notice` VALUES ('1', '123', '2019-04-30 09:46:03', '1', '3');
+INSERT INTO `sys_notice` VALUES ('1', '123', '2019-04-30 09:46:03', '1', '1');
 
 -- ----------------------------
 -- Table structure for sys_organization
@@ -327,23 +326,23 @@ CREATE TABLE `sys_resource` (
   `sort` int(11) DEFAULT NULL COMMENT '排序',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COMMENT='资源表';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='资源表';
 
 -- ----------------------------
 -- Records of sys_resource
 -- ----------------------------
-INSERT INTO `sys_resource` VALUES ('1', '-1', '项目管理', 'project', '../container/project/project.vue', 'el-icon-menu', '2018-07-12 14:59:35', '2018-07-19 15:27:26', '2', null);
-INSERT INTO `sys_resource` VALUES ('2', '-1', '基础管理', 'null', 'null', 'el-icon-menu', '2018-07-12 15:16:34', null, '2', null);
+INSERT INTO `sys_resource` VALUES ('2', null, '基础管理', 'base', 'null', 'el-icon-menu', '2018-07-12 15:16:34', '2019-05-05 09:14:15', '2', null);
 INSERT INTO `sys_resource` VALUES ('3', '2', '账户管理', 'account', '../container/account/account.vue', 'el-icon-menu', '2018-07-12 15:16:57', '2018-07-12 19:57:02', '1', null);
 INSERT INTO `sys_resource` VALUES ('4', '2', '角色管理', 'role', '../container/role/role.vue', 'el-icon-menu', '2018-07-12 15:17:20', '2018-07-12 19:57:16', '2', null);
 INSERT INTO `sys_resource` VALUES ('5', '2', '组织管理', 'organization', '../container/organization/organization.vue', 'el-icon-menu', '2018-07-12 15:17:59', '2018-07-12 19:57:27', '6', null);
 INSERT INTO `sys_resource` VALUES ('6', '2', '资源管理', 'resource', '../container/resource/resource.vue', 'el-icon-menu', '2018-07-12 15:18:17', '2018-07-12 19:57:41', '4', null);
 INSERT INTO `sys_resource` VALUES ('7', '2', '资源分配', 'resAssignment', '../container/resource/resAssignment.vue', 'el-icon-menu', '2018-07-12 15:18:44', '2018-07-12 19:57:51', '5', null);
 INSERT INTO `sys_resource` VALUES ('8', '2', '角色分配', 'roleAssignment', '../container/role/roleAssignment.vue', 'el-icon-menu', '2018-07-12 15:19:15', '2018-07-12 20:00:12', '3', null);
-INSERT INTO `sys_resource` VALUES ('9', '-1', '主页', 'home', '../components/page/Dashboard.vue', 'el-icon-menu', '2018-07-12 17:41:00', '2018-07-19 15:26:52', '1', null);
-INSERT INTO `sys_resource` VALUES ('11', '-1', '月利息点', 'interestRate', '../container/interestRate/interestRate.vue', 'el-icon-menu', '2018-07-19 11:10:03', null, '6', null);
-INSERT INTO `sys_resource` VALUES ('12', '-1', '人员级别配置', 'staffLevelConf', '../container/staffLevelConf/staffLevelConf.vue', 'el-icon-menu', '2018-07-19 15:26:21', '2018-07-19 16:01:15', '5', null);
+INSERT INTO `sys_resource` VALUES ('9', null, '主页', 'home', '../components/page/Dashboard.vue', 'el-icon-menu', '2018-07-12 17:41:00', '2018-07-19 15:26:52', '1', null);
 INSERT INTO `sys_resource` VALUES ('15', '2', '字典管理', 'key', '', 'el-icon-menu', '2018-08-08 17:32:54', null, '7', null);
+INSERT INTO `sys_resource` VALUES ('16', null, '代码生成', 'codeGenerator', '', 'el-icon-menu', '2019-05-05 09:35:33', '2019-05-05 09:35:56', '3', null);
+INSERT INTO `sys_resource` VALUES ('17', '16', '代码生成器', 'generateForm', '', 'el-icon-menu', '2019-05-05 09:37:15', null, '0', null);
+INSERT INTO `sys_resource` VALUES ('18', null, '数据库连接管理', 'databaseConn', '', 'el-icon-menu', '2019-05-05 09:38:06', null, '4', null);
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -374,12 +373,11 @@ CREATE TABLE `sys_role_res` (
   `role_Id` bigint(20) NOT NULL COMMENT '角色ID',
   `res_Id` bigint(20) NOT NULL COMMENT '资源ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of sys_role_res
 -- ----------------------------
-INSERT INTO `sys_role_res` VALUES ('1', '1', '1');
 INSERT INTO `sys_role_res` VALUES ('2', '1', '2');
 INSERT INTO `sys_role_res` VALUES ('3', '1', '3');
 INSERT INTO `sys_role_res` VALUES ('4', '1', '4');
@@ -387,12 +385,16 @@ INSERT INTO `sys_role_res` VALUES ('5', '1', '5');
 INSERT INTO `sys_role_res` VALUES ('6', '1', '6');
 INSERT INTO `sys_role_res` VALUES ('7', '1', '7');
 INSERT INTO `sys_role_res` VALUES ('8', '1', '8');
-INSERT INTO `sys_role_res` VALUES ('12', '1', '11');
-INSERT INTO `sys_role_res` VALUES ('13', '1', '12');
-INSERT INTO `sys_role_res` VALUES ('19', '2', '1');
-INSERT INTO `sys_role_res` VALUES ('20', '2', '11');
 INSERT INTO `sys_role_res` VALUES ('23', '1', '15');
-INSERT INTO `sys_role_res` VALUES ('24', '2', '12');
+INSERT INTO `sys_role_res` VALUES ('25', '1', '9');
+INSERT INTO `sys_role_res` VALUES ('26', '1', '16');
+INSERT INTO `sys_role_res` VALUES ('27', '1', '17');
+INSERT INTO `sys_role_res` VALUES ('28', '1', '18');
+INSERT INTO `sys_role_res` VALUES ('29', '2', '9');
+INSERT INTO `sys_role_res` VALUES ('30', '2', '16');
+INSERT INTO `sys_role_res` VALUES ('31', '2', '17');
+INSERT INTO `sys_role_res` VALUES ('32', '2', '18');
+INSERT INTO `sys_role_res` VALUES ('33', '3', '9');
 
 -- ----------------------------
 -- Table structure for sys_user
