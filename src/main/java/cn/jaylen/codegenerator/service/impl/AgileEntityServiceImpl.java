@@ -54,9 +54,6 @@ public class AgileEntityServiceImpl extends BaseServiceImpl<AgileEntity> impleme
             agileEntity.preInsert();
             agileEntityMapper.insertSelective(agileEntity);
 
-//            DatabaseConnection connection = connectionMapper.selectByPrimaryKey(conId);
-//            DatabaseUtil util = new DatabaseUtil(connection);
-//            util.
             saveComponent(conId, databaseName, tableName, agileEntity.getId());
         }
         return tableNames.length;

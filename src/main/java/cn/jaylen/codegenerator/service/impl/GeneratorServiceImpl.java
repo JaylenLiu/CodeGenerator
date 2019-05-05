@@ -62,7 +62,6 @@ public class GeneratorServiceImpl implements GeneratorService {
     @Override
     public synchronized Message generateCode(Long schemaId, String[] generateList) {
         String packagePath;
-        String moduleName;
 
         // 获取schema信息
         AgileSchema agileSchema = schemaService.selectByPrimaryKey(schemaId);
@@ -70,7 +69,6 @@ public class GeneratorServiceImpl implements GeneratorService {
             return Message.errorMessage(500, "方案信息不存在！");
         } else {
             packagePath = agileSchema.getPackagePath();
-            moduleName = agileSchema.getModuleName();
         }
 
         // 获取entity信息
@@ -94,11 +92,11 @@ public class GeneratorServiceImpl implements GeneratorService {
                     AgileComponentExample componentExample = new AgileComponentExample();
                     componentExample.createCriteria().andEntityIdEqualTo(entity.getId());
                     List<AgileComponent> componentList = agileComponentMapper.selectByExample(componentExample);
-                    generateWebCode(packagePath, moduleName, StringUtils.toLowerCaseFirstOne(entity.getClassName()), componentList);
+                    generateWebCode(packagePath, StringUtils.toLowerCaseFirstOne(entity.getClassName()), componentList);
                 });
             } else if ("java".equals(generateType)) {
                 // 生成后端代码
-                generateBackendCode(packagePath, moduleName, tableNames, jdbcMap, entityList.get(0).getConId(), entityList.get(0).getDatabaseName());
+                generateBackendCode(packagePath, tableNames, jdbcMap, entityList.get(0).getConId(), entityList.get(0).getDatabaseName());
             }
         }
         // 文件压缩并下载
@@ -141,7 +139,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         }
     }
 
-    public boolean generateWebCode(String packagePath, String moduleName, String entityName, List<AgileComponent> componentList){
+    public boolean generateWebCode(String packagePath, String entityName, List<AgileComponent> componentList){
         GeneratorUtil util = GeneratorUtil.getGeneratorUtil(outputPath,packagePath);
         try{
             util.generateIndex(entityName,componentList);
@@ -160,7 +158,7 @@ public class GeneratorServiceImpl implements GeneratorService {
      * @param jdbc ： 数据库连接信息
      * @return
      */
-    private boolean generateBackendCode(String packagePath, String moduleName, List<String> tableNames,
+    private boolean generateBackendCode(String packagePath, List<String> tableNames,
                                         Map<String, Object> jdbc, long conId, String databaseName){
         GeneratorUtil util = GeneratorUtil.getGeneratorUtil(outputPath,packagePath);
         try{

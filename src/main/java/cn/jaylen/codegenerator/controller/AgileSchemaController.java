@@ -57,6 +57,6 @@ public class AgileSchemaController{
     @PutMapping(value = "/agileSchema")
     public Message updateAgileSchema(AgileSchema agileSchema){
         agileSchema.preUpdate();
-        return Message.successMessage(service.updateByPrimaryKey(agileSchema));
+        return Message.successMessage(service.updateByPrimaryKeySelective(agileSchema));
     }
 }
