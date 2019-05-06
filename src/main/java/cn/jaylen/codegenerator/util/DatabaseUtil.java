@@ -43,7 +43,7 @@ public class DatabaseUtil {
             } else if (databaseConnection.getConnType() == 2) {
                 url = "jdbc:sqlserver://" + databaseConnection.getConnIp() + ":" + databaseConnection.getConnPort() + ";DatabaseName=ecology";
             } else if (databaseConnection.getConnType() == 3) {
-                url = "jdbc:oracle:thin:@" + databaseConnection.getConnIp() + ":" + databaseConnection.getConnPort()+":xe";
+                url = "jdbc:oracle:thin:@" + databaseConnection.getConnIp() + ":" + databaseConnection.getConnPort()+":" + databaseConnection.getSid();
             }
             this.databaseConnection = databaseConnection;
             con = DriverManager.getConnection(url, databaseConnection.getConnUsername(), databaseConnection.getConnPwd());
