@@ -1,13 +1,11 @@
 package cn.jaylen.codegenerator.dao;
 
 import cn.jaylen.codegenerator.entity.DatabaseConnection;
-import cn.jaylen.codegenerator.entity.example.DatabaseConnectionExample;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
-@Repository
+import cn.jaylen.codegenerator.entity.example.DatabaseConnectionExample;
+import org.apache.ibatis.annotations.Param;
+
 public interface DatabaseConnectionMapper {
     long countByExample(DatabaseConnectionExample example);
 

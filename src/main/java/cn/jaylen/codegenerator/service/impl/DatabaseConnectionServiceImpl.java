@@ -43,8 +43,8 @@ public class DatabaseConnectionServiceImpl extends BaseServiceImpl<DatabaseConne
                 conMap.put("children", conList);
                 DatabaseUtil util = new DatabaseUtil(item);
                 // 获取数据库信息
-                util.getDatabases().stream().filter((database) -> !database.equals("information_schema")
-                        && !database.equals("mysql") && !database.equals("sys") && !database.equals("performance_schema")).forEach((database) -> {
+                LinkedList ignoreDatabase = getIgnoreDatabase();
+                util.getDatabases().stream().filter((database) -> !ignoreDatabase.contains(database)).forEach((database) -> {
                     HashMap<String, Object> databaseMap = new HashMap<>();
                     List<Map<String, Object>> databaseList = new ArrayList<>();
                     databaseMap.put("label", database);
@@ -66,6 +66,19 @@ public class DatabaseConnectionServiceImpl extends BaseServiceImpl<DatabaseConne
             });
         }
         return databaseTree;
+    }
+
+    private LinkedList<String> getIgnoreDatabase(){
+        LinkedList<String> ignoreDatabase = new LinkedList<>();
+        ignoreDatabase.add("information_schema");
+        ignoreDatabase.add("mysql");
+        ignoreDatabase.add("sys");
+        ignoreDatabase.add("performance_schema");
+        ignoreDatabase.add("model");
+        ignoreDatabase.add("master");
+        ignoreDatabase.add("msdb");
+        ignoreDatabase.add("tempdb");
+        return ignoreDatabase;
     }
 
     @Override

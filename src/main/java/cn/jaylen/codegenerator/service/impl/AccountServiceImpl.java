@@ -44,10 +44,10 @@ public class AccountServiceImpl implements AccountService {
     @Resource
     private SysAccountRoleMapper sysAccountRoleMapper;
 
-    @Autowired
+    @Resource
     private SysOrganizationMapper organizationMapper;
 
-    @Autowired
+    @Resource
     private SysRoleMapper sysRoleMapper;
 
     private Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);

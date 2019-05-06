@@ -17,7 +17,7 @@ public class DatabaseUtil {
 
     private DatabaseMetaData dbMetaData = null;
     private Connection con = null;
-
+    DatabaseConnection databaseConnection = null;
     /**
      * 根据传入的对象构建元数据
      */
@@ -37,14 +37,34 @@ public class DatabaseUtil {
      */
     public DatabaseUtil(DatabaseConnection databaseConnection){
         try {
+            String url = "";
             if (databaseConnection.getConnType() == 1) {
-                String url = "jdbc:mysql://" + databaseConnection.getConnIp() + ":" + databaseConnection.getConnPort();
-                con = DriverManager.getConnection(url, databaseConnection.getConnUsername(), databaseConnection.getConnPwd());
-                dbMetaData = con.getMetaData();
+                url = "jdbc:mysql://" + databaseConnection.getConnIp() + ":" + databaseConnection.getConnPort();
+            } else if (databaseConnection.getConnType() == 2) {
+                url = "jdbc:sqlserver://" + databaseConnection.getConnIp() + ":" + databaseConnection.getConnPort() + ";DatabaseName=ecology";
+            } else if (databaseConnection.getConnType() == 3) {
+                url = "jdbc:oracle:thin:@" + databaseConnection.getConnIp() + ":" + databaseConnection.getConnPort()+":xe";
             }
+            this.databaseConnection = databaseConnection;
+            con = DriverManager.getConnection(url, databaseConnection.getConnUsername(), databaseConnection.getConnPwd());
+            dbMetaData = con.getMetaData();
         } catch (Exception e) {
             logger.error("数据库连接获取失败",databaseConnection, e.getMessage());
         }
+    }
+
+    public static void main(String[] args) {
+        DatabaseConnection connection = new DatabaseConnection();
+        connection.setConnIp("10.200.132.165");
+        connection.setConnPort(1521);
+        connection.setConnType(3);
+        connection.setConnUsername("pg_elec_insp_admin");
+        connection.setConnPwd("Pioneer@2019");
+        DatabaseUtil util = new DatabaseUtil(connection);
+        LinkedList<String> database = util.getDatabases();
+        database.forEach(System.out::println);
+        LinkedList<String> result = util.getAllTableList("PG_ELEC_INSP_ADMIN");
+        result.forEach(System.out::println);
     }
 
     public DatabaseMetaData getDbMetaData() {
@@ -62,8 +82,14 @@ public class DatabaseUtil {
         LinkedList<String> tableNames = new LinkedList<>();
         try {
             // table type. Typical types are "TABLE", "VIEW", "SYSTEM TABLE", "GLOBAL TEMPORARY", "LOCAL TEMPORARY", "ALIAS", "SYNONYM".
-            String[] types = { "TABLE" };
-            ResultSet rs = dbMetaData.getTables(catalog, catalog, "%", types);
+            String[] types = { "TABLE", "VIEW" };
+            ResultSet rs;
+            if (this.databaseConnection.getConnType() == 3) {
+                rs = dbMetaData.getTables(con.getCatalog(), catalog, "%", types);
+            } else {
+                rs = dbMetaData.getTables(catalog, null, "%", types);
+            }
+
             while (rs.next()) {
                 tableNames.add(rs.getString("TABLE_NAME"));
             }
@@ -80,7 +106,11 @@ public class DatabaseUtil {
      * @throws SQLException
      */
     public LinkedList<String> getDatabases() {
+
         LinkedList<String> list = new LinkedList<>();
+        if (databaseConnection.getConnType() == 3) {
+            list.add(databaseConnection.getConnUsername().toUpperCase());
+        }
         try{
             ResultSet rs=dbMetaData.getCatalogs();
             while(rs.next()){
@@ -100,7 +130,7 @@ public class DatabaseUtil {
     public List<Map<String, Object>> getTableColumns(String schemaName, String tableName) {
         LinkedList<Map<String, Object>> list = new LinkedList<>();
         try{
-            ResultSet rs = dbMetaData.getColumns(schemaName, schemaName, tableName, "%");
+            ResultSet rs = dbMetaData.getColumns(schemaName, null, tableName, "%");
             while (rs.next()){
                 HashMap<String, Object> map = new HashMap<>();
                 map.put("columnName", rs.getString("COLUMN_NAME"));

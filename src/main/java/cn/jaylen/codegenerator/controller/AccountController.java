@@ -5,6 +5,7 @@ import cn.jaylen.codegenerator.entity.SysAccount;
 import cn.jaylen.codegenerator.entity.SysUser;
 import cn.jaylen.codegenerator.service.AccountService;
 import cn.jaylen.codegenerator.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,8 +18,8 @@ import javax.servlet.http.HttpSession;
  **/
 @RestController
 public class AccountController {
-    @Resource
-    private AccountService service;
+    @Autowired
+    private AccountService accountService;
 
     /**
      * 登录
@@ -31,13 +32,13 @@ public class AccountController {
         if (StringUtils.isNullOrEmpty(username) || StringUtils.isNullOrEmpty(password)){
             return Message.errorMessage(500, "登录名或者密码为空！");
         } else {
-            return service.login(username, password);
+            return accountService.login(username, password);
         }
     }
 
     @PutMapping(value = "/loginout")
     public Message loginout(HttpSession session){
-        return service.loginout(session);
+        return accountService.loginout(session);
     }
 
     /**
@@ -51,7 +52,7 @@ public class AccountController {
         if (state == null){
             return Message.nullParamsMessage();
         } else {
-            return service.getAccounts(state,searchKey);
+            return accountService.getAccounts(state,searchKey);
         }
     }
 
@@ -61,7 +62,7 @@ public class AccountController {
      */
     @GetMapping(value = "/allAccounts")
     public Message getAllAccount(){
-        return service.getAllAccount();
+        return accountService.getAllAccount();
     }
 
     /**
@@ -74,7 +75,7 @@ public class AccountController {
         if (roleId == null) {
             return Message.nullParamsMessage();
         } else {
-            return service.getAccountByRoleId(roleId);
+            return accountService.getAccountByRoleId(roleId);
         }
     }
 
@@ -89,7 +90,7 @@ public class AccountController {
         if (accountIds == null || accountIds.length == 0) {
             return Message.nullParamsMessage();
         } else {
-            return service.deleteAccounts(accountIds, userIds);
+            return accountService.deleteAccounts(accountIds, userIds);
         }
     }
 
@@ -103,7 +104,7 @@ public class AccountController {
         if (ids == null || ids.length == 0) {
             return Message.nullParamsMessage();
         } else {
-            return service.updatePassword(ids);
+            return accountService.updatePassword(ids);
         }
     }
 
@@ -112,7 +113,7 @@ public class AccountController {
         if (account == null || user == null) {
             return Message.nullParamsMessage();
         } else {
-            return Message.successMessage(service.saveAccount(account, user, roleId));
+            return Message.successMessage(accountService.saveAccount(account, user, roleId));
         }
     }
 
@@ -126,7 +127,7 @@ public class AccountController {
         if (account == null || user == null) {
             return Message.nullParamsMessage();
         } else {
-            return service.updateAccount(account, user, roleId);
+            return accountService.updateAccount(account, user, roleId);
         }
     }
 
@@ -141,7 +142,7 @@ public class AccountController {
         if (id == 0 || state == 0 ) {
             return Message.nullParamsMessage();
         } else {
-            return service.updateState(id,state);
+            return accountService.updateState(id,state);
         }
     }
 
@@ -155,7 +156,7 @@ public class AccountController {
         if (StringUtils.isNullOrEmpty(newPassword)) {
             return Message.nullParamsMessage();
         } else {
-            return service.changePassword(newPassword);
+            return accountService.changePassword(newPassword);
         }
     }
 }

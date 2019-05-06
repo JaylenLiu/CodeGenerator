@@ -9,6 +9,7 @@
     <result column="conn_port" jdbcType="INTEGER" property="connPort" />
     <result column="conn_username" jdbcType="VARCHAR" property="connUsername" />
     <result column="conn_pwd" jdbcType="VARCHAR" property="connPwd" />
+    <result column="sid" jdbcType="VARCHAR" property="sid" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
@@ -72,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, conn_name, conn_type, conn_ip, conn_port, conn_username, conn_pwd, create_time, 
+    id, conn_name, conn_type, conn_ip, conn_port, conn_username, conn_pwd, sid, create_time, 
     update_time, remark
   </sql>
   <select id="selectByExample" parameterType="cn.jaylen.codegenerator.entity.example.DatabaseConnectionExample" resultMap="BaseResultMap">
@@ -108,12 +109,12 @@
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="cn.jaylen.codegenerator.entity.DatabaseConnection">
     insert into database_connection (id, conn_name, conn_type, 
       conn_ip, conn_port, conn_username, 
-      conn_pwd, create_time, update_time, 
-      remark)
+      conn_pwd, sid, create_time, 
+      update_time, remark)
     values (#{id,jdbcType=BIGINT}, #{connName,jdbcType=VARCHAR}, #{connType,jdbcType=INTEGER}, 
       #{connIp,jdbcType=VARCHAR}, #{connPort,jdbcType=INTEGER}, #{connUsername,jdbcType=VARCHAR}, 
-      #{connPwd,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{remark,jdbcType=VARCHAR})
+      #{connPwd,jdbcType=VARCHAR}, #{sid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="cn.jaylen.codegenerator.entity.DatabaseConnection">
     insert into database_connection
@@ -138,6 +139,9 @@
       </if>
       <if test="connPwd != null">
         conn_pwd,
+      </if>
+      <if test="sid != null">
+        sid,
       </if>
       <if test="createTime != null">
         create_time,
@@ -170,6 +174,9 @@
       </if>
       <if test="connPwd != null">
         #{connPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="sid != null">
+        #{sid,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -212,6 +219,9 @@
       <if test="record.connPwd != null">
         conn_pwd = #{record.connPwd,jdbcType=VARCHAR},
       </if>
+      <if test="record.sid != null">
+        sid = #{record.sid,jdbcType=VARCHAR},
+      </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
@@ -235,6 +245,7 @@
       conn_port = #{record.connPort,jdbcType=INTEGER},
       conn_username = #{record.connUsername,jdbcType=VARCHAR},
       conn_pwd = #{record.connPwd,jdbcType=VARCHAR},
+      sid = #{record.sid,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       remark = #{record.remark,jdbcType=VARCHAR}
@@ -263,6 +274,9 @@
       <if test="connPwd != null">
         conn_pwd = #{connPwd,jdbcType=VARCHAR},
       </if>
+      <if test="sid != null">
+        sid = #{sid,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -283,6 +297,7 @@
       conn_port = #{connPort,jdbcType=INTEGER},
       conn_username = #{connUsername,jdbcType=VARCHAR},
       conn_pwd = #{connPwd,jdbcType=VARCHAR},
+      sid = #{sid,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=VARCHAR}
