@@ -23,7 +23,7 @@ import java.io.PrintWriter;
 /**
  * 登录拦截，如检测到session 丢失，则返回请求
  */
-@Component
+//@Component
 @WebFilter(urlPatterns = "/*", filterName = "loginFilter")
 public class LoginFilter implements Filter{
     @Override
@@ -36,7 +36,7 @@ public class LoginFilter implements Filter{
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
         HttpSession session = httpRequest.getSession();
         String url = httpRequest.getRequestURL().toString();
-        if (!url.contains("login") && session.getAttribute("username") == null) {
+        if (!url.contains("login") && !url.contains("index.html") && session.getAttribute("username") == null) {
             sendMessage(httpResponse, Message.errorMessage(600, "未登录系统！"));
         } else {
             filterChain.doFilter(servletRequest, servletResponse);

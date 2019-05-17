@@ -153,7 +153,6 @@ public class GeneratorServiceImpl implements GeneratorService {
     /**
      * 生成后端代码
      * @param packagePath： 包路径
-     * @param moduleName： 模块名称
      * @param tableNames： 表名
      * @param jdbc ： 数据库连接信息
      * @return
@@ -181,12 +180,13 @@ public class GeneratorServiceImpl implements GeneratorService {
                     map.put("typeName", DatabaseUtil.getClassType(map.get("typeName").toString()));
                     map.put("columnName", StringUtils.lineToHump(map.get("columnName").toString()));
                     if (primarykeys != null && primarykeys.size() > 0) {
-                        if (map.get("columnName").toString().equals(primarykeys.get(0).get("column_name").toString())){
+                        if (map.get("columnName").toString().equalsIgnoreCase(primarykeys.get(0).get("column_name").toString())){
                             map.put("primaryKey", true);
                             primaryKeyType = map.get("typeName").toString();
                         }
                     }
                 }
+                System.out.println("primaryKeyType=" + primaryKeyType);
                 item = StringUtils.lineToHump(item);
                 util.generateController(item, primaryKeyType);
                 util.generateService(item, primaryKeyType);
